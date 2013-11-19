@@ -1,0 +1,8 @@
+{
+  "name": "angularPhotogrid",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.2.1",
+    "angular-route": "~1.2.1"
+  }
+}
