@@ -57,7 +57,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            this.$$photogrid = Photogrid.create(scope, elem, attrs);
+            this.$$photogrid = Photogrid.create(scope, elem[0], attrs);
         };
 
         return {
