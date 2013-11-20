@@ -37,7 +37,7 @@ angular.module('akoenig.deckgrid.demo').controller('HomeController', [
             {id: 'photo-15', name: 'Photo 15', src: 'http://lorempixel.com/400/300/sports'},
             {id: 'photo-16', name: 'Photo 16', src: 'http://lorempixel.com/400/300/nightlife'},
             {id: 'photo-17', name: 'Photo 17', src: 'http://lorempixel.com/400/300/nature'},
-            {id: 'photo-18', name: 'Photo 1', src: 'http://lorempixel.com/400/300/abstract'}
+            {id: 'photo-18', name: 'Photo 18', src: 'http://lorempixel.com/400/300/abstract'}
             // {id: 'photo-', src: 'http://2.bp.blogspot.com/-BlD03hE_B-E/T8tmmMFdRLI/AAAAAAAABbY/VBmKxOtCqwE/s1600/Africa_Nature_Animals+(28).jpg'},
             // {id: 'photo-', src: 'http://www.wall321.com/thumbnails/detail/20120524/bunnies%20nature%20animals%20grass%20rabbits%201920x1200%20wallpaper_www.wall321.com_3.jpg'},
             // {id: 'photo-', src: 'http://edennaturepark.com.ph/eden_images/nature_animals.jpg'},
