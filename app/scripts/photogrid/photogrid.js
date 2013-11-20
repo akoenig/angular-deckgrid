@@ -12,25 +12,30 @@ var akoenig = akoenig || {};
 
 angular.module('akoenig.photogrid').factory('Photogrid', [
 
-    function initialize (Photogrid) {
+    '$compile',
+    '$timeout',
+
+    function initialize ($compile, $timeout) {
 
         /**
          * DOCME
          *
          */
-        function Photogrid (scope, element, template) {
+        function Photogrid (scope, element) {
             var self = this,
                 watcher;
 
             this.$$elem = element;
-            this.$$scope = scope;
-            this.$$template = template;
             this.$$watchers = [];
+
+            this.$$scope = scope;
+            this.$$scope.columns = [];
 
             //
             // The configuration will be parsed out of the elements pseudo "before element."
             //
-            this.$$config = this.$$parse();
+            this.$$scope.layout = this.$$getLayout();
+            this.$$createColumns();
 
             //
             // Register model change.
@@ -52,8 +57,39 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
             })();
             this.$$watchers.push(watcher);
 
-            this.$$parse();
+// var id;
+// function watchModel () {
+//     $timeout.cancel(id);
+//     console.log(self.$$scope.columns.first.photos[0]);
+
+//     id = $timeout(watchModel, 5000);
+// }
+
+// id = $timeout(watchModel, 5000);
         }
+
+        /**
+         * DOCME
+         *
+         * @return {[type]} [description]
+         *
+         */
+        Photogrid.prototype.$$createColumns = function $$createColumns () {
+            var self = this;
+
+            this.$$scope.columns = [];
+
+            angular.forEach(this.$$scope.model, function onIteration (photo, index) {
+                var column = index % self.$$scope.layout.columns;
+
+                if (!self.$$scope.columns[column]) {
+                    self.$$scope.columns[column] = [];
+                }
+
+                self.$$scope.columns[column].push(photo)
+            });
+            console.log(self.$$scope.columns);
+        };
 
         /**
          * @private
@@ -61,23 +97,17 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * @return {[type]} [description]
          *
          */
-        Photogrid.prototype.$$parse = function $$parse () {
+        Photogrid.prototype.$$getLayout = function $$getLayout () {
             var content = window.getComputedStyle(this.$$elem, ':before').content,
-                config = {};
+                layout = {};
 
             content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
             content = content.split(' ');
 
-            config.columns = (content[0] | 0);
-            config.cssClasses = content[1].split('.');
+            layout.columns = (content[0] | 0);
+            layout.classList = content[1].replace(/\./g, ' ').trim();
 
-            //
-            // If the declaration was: ".column.size-1of3", the first string in the array will be empty
-            // by splitting at ".". Therefore it will be eliminated here.
-            //
-            config.cssClasses = config.cssClasses.splice(1, config.cssClasses.length - 1);
-
-            return config;
+            return layout;
         };
 
         /**
@@ -87,10 +117,20 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          *
          */
         Photogrid.prototype.$$onWindowResize = function $$onWindowResize () {
-            console.log('Window resize');
-            var config = this.$$parse();
+            var self = this,
+                layout = this.$$getLayout();
 
-            console.log(config);
+            //
+            // Okay, the layout has changed.
+            // Creating a new column structure is not avoidable.
+            //
+            if (layout.columns !== this.$$scope.layout.columns) {
+                this.$$scope.$apply(function () {
+                    self.$$scope.layout = layout;
+
+                    self.$$createColumns();
+                });
+            }
         };
 
         /**
@@ -101,6 +141,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          */
         Photogrid.prototype.$$onModelChange = function $$onModelChange () {
             console.log('Model change');
+            console.log(arguments);
         };
 
         /**
@@ -124,8 +165,8 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
              * @return {[type]} [description]
              *
              */
-            create : function create (scope, element, template) {
-                return new Photogrid(scope, element, template);
+            create : function create (scope, element) {
+                return new Photogrid(scope, element);
             }
         };
     }

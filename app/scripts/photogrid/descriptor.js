@@ -23,6 +23,8 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         function Descriptor () {
             this.restrict = 'E';
 
+            // TODO: Move this to attributes
+            this.templateUrl = 'views/photogrid.html';
             this.scope = {
                 'model': '=source'
             };
@@ -54,10 +56,10 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
          * @return {[type]}        [description]
          *
          */
-        Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
+        Descriptor.prototype.$$link = function $$link (scope, elem) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            this.$$photogrid = Photogrid.create(scope, elem[0], attrs);
+            this.$$photogrid = Photogrid.create(scope, elem[0]);
         };
 
         return {
