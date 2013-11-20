@@ -28,7 +28,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                                '<div data-ng-repeat="item in column" data-ng-include="itemTemplate"></div>' +
+                                '<div data-ng-repeat="card in column" data-ng-include="cardTemplate"></div>' +
                             '</div>';
 
             this.scope = {
@@ -63,7 +63,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            scope.itemTemplate = attrs.itemtemplate;
+            scope.cardTemplate = attrs.cardtemplate;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
         };

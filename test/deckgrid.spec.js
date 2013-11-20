@@ -42,7 +42,7 @@ describe('Unit: The angular-deckgrid', function () {
 
             $window.getComputedStyle = function () {
                 return {
-                    content: "'"+ columnCount + " .column.size-1-" + columnCount + "'"
+                    content: '\''+ columnCount + ' .column.size-1-' + columnCount + '\''
                 };
             };
 
@@ -51,9 +51,9 @@ describe('Unit: The angular-deckgrid', function () {
             //
             // Mock the template request
             //
-            $templateCache.put('views/deckgrid-photo.html', '<img data-ng-src="{{photo.src}}" alt="{{photo.id}}" src="">');
+            $templateCache.put('views/deckgrid-card.html', '<img data-ng-src="{{card.src}}" alt="{{card.id}}" src="">');
 
-            $elem = $compile('<deckgrid class="deckgrid" source="photos" itemTemplate="views/deckgrid-photo.html"></deckgrid>')($rootScope);
+            $elem = $compile('<deckgrid class="deckgrid" source="photos" cardTemplate="views/deckgrid-card.html"></deckgrid>')($rootScope);
 
             $rootScope.$digest();
 
@@ -66,6 +66,6 @@ describe('Unit: The angular-deckgrid', function () {
             expect($($photos[0]).attr('alt')).toBe(photos[0].id);
             expect($($photos[1]).attr('alt')).toBe(photos[3].id);
             expect($($photos[2]).attr('alt')).toBe(photos[6].id);
-        }]
-    ));
+        }
+    ]));
 });

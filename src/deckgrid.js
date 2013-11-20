@@ -60,7 +60,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          * Creates the column segmentation. With other words:
          * This method creates the internal data structure from the
-         * passed "source" attribute. Every item within this "source"
+         * passed "source" attribute. Every card within this "source"
          * model will be passed into this internal column structure by
          * reference. So if you modify the data within your controller
          * this directive will reflect these changes immediately.
@@ -73,14 +73,14 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             this.$$scope.columns = [];
 
-            angular.forEach(this.$$scope.model, function onIteration (item, index) {
+            angular.forEach(this.$$scope.model, function onIteration (card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
                     self.$$scope.columns[column] = [];
                 }
 
-                self.$$scope.columns[column].push(item);
+                self.$$scope.columns[column].push(card);
             });
         };
 
@@ -136,7 +136,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             if (layout.columns !== this.$$scope.layout.columns) {
                 self.$$scope.layout = layout;
 
-                self.$$createColumns();
+                self.$$scope.$apply(function onApply () {
+                    self.$$createColumns();
+                });
             }
         };
 
