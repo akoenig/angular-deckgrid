@@ -30,12 +30,12 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
 
             this.$$scope = scope;
             this.$$scope.columns = [];
-console.log(this.$$scope);
+
             //
             // The configuration will be parsed out of the elements pseudo "before element."
             //
             this.$$scope.layout = this.$$getLayout();
-
+console.log('HERE');
             this.$$createColumns();
 
             //
@@ -81,7 +81,7 @@ console.log(this.$$scope);
             this.$$scope.columns = [];
 
             angular.forEach(this.$$scope.model, function onIteration (photo, index) {
-                var column = index % self.$$scope.layout.columns;
+                var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
                     self.$$scope.columns[column] = [];
@@ -89,7 +89,6 @@ console.log(this.$$scope);
 
                 self.$$scope.columns[column].push(photo)
             });
-            console.log(self.$$scope.columns);
         };
 
         /**
