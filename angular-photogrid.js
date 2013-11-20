@@ -7,6 +7,12 @@
  *
  */
 
+/**
+ * @author André König (andre.koenig@posteo.de)
+ *
+ */
+
+angular.module('akoenig.photogrid', []);
 
 angular.module('akoenig.photogrid').directive('photogrid', [
 
@@ -27,6 +33,10 @@ angular.module('akoenig.photogrid').directive('photogrid', [
  *
  */
 
+/**
+ * @author André König (andre.koenig@posteo.de)
+ *
+ */
 
 angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
 
@@ -37,7 +47,8 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         'use strict';
 
         /**
-         * DOCME
+         * This is a wrapper around the AngularJS
+         * directive description object.
          *
          */
         function Descriptor () {
@@ -60,9 +71,10 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         }
 
         /**
-         * DOCME
+         * @private
          *
-         * @return {[type]} [description]
+         * Cleanup method. Will be called when the
+         * photogrid directive should be destroyed.
          *
          */
         Descriptor.prototype.$$destroy = function $$destroy () {
@@ -72,10 +84,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         /**
          * @private
          *
-         * @param  {[type]} $scope [description]
-         * @param  {[type]} elem   [description]
-         * @param  {[type]} attrs  [description]
-         * @return {[type]}        [description]
+         * The photogrid link method. Will instantiate the photogrid.
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
@@ -87,12 +96,6 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         };
 
         return {
-            /**
-             * DOCME
-             *
-             * @return {[type]} [description]
-             *
-             */
             create : function create () {
                 return new Descriptor();
             }
@@ -108,15 +111,21 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
  *
  */
 
+/**
+ * @author André König (andre.koenig@posteo.de)
+ *
+ */
 
 angular.module('akoenig.photogrid').factory('Photogrid', [
 
-    function initialize () {
+    '$window',
+
+    function initialize ($window) {
 
         'use strict';
 
         /**
-         * DOCME
+         * The photogrid directive.
          *
          */
         function Photogrid (scope, element) {
@@ -130,7 +139,9 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
             this.$$scope.columns = [];
 
             //
-            // The configuration will be parsed out of the elements pseudo "before element."
+            // The layout configuration will be parsed from
+            // the pseudo "before element." There you have to save all
+            // the column configurations.
             //
             this.$$scope.layout = this.$$getLayout();
 
@@ -158,9 +169,16 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
         }
 
         /**
-         * DOCME
+         * @private
          *
-         * @return {[type]} [description]
+         * Creates the column segmentation. With other words:
+         * This method creates the internal data structure from the
+         * passed "source" attribute. Every photo within this "source"
+         * model will be passed into this internal column structure by
+         * reference. So if you modify the data within your controller
+         * this directive will reflect these changes immediately.
+         *
+         * NOTE that calling this method will trigger a complete template "redraw".
          *
          */
         Photogrid.prototype.$$createColumns = function $$createColumns () {
@@ -182,26 +200,41 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
         /**
          * @private
          *
-         * @return {[type]} [description]
+         * Parses the configuration out of the configured CSS styles.
+         *
+         * Example:
+         *
+         *     .photogrid::before {
+         *         content: '3 .column.size-1-3';
+         *     }
+         *
+         * Will result in a three column grid where each column will have the
+         * classes: "column size-1-3".
+         *
+         * You are responsible for defining the respective styles within your CSS.
          *
          */
         Photogrid.prototype.$$getLayout = function $$getLayout () {
-            var content = window.getComputedStyle(this.$$elem, ':before').content,
+            var content = $window.getComputedStyle(this.$$elem, ':before').content,
+                layout;
+
+            if (content) {
                 layout = {};
 
-            content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
-            content = content.split(' ');
+                content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
+                content = content.split(' ');
 
-            layout.columns = (content[0] | 0);
-            layout.classList = content[1].replace(/\./g, ' ').trim();
+                layout.columns = (content[0] | 0);
+                layout.classList = content[1].replace(/\./g, ' ').trim();
+            }
 
             return layout;
         };
 
         /**
-         * DOCME
+         * @private
          *
-         * @return {[type]} [description]
+         * Event that will be triggered on "window resize".
          *
          */
         Photogrid.prototype.$$onWindowResize = function $$onWindowResize () {
@@ -213,18 +246,16 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
             // Creating a new column structure is not avoidable.
             //
             if (layout.columns !== this.$$scope.layout.columns) {
-                this.$$scope.$apply(function () {
-                    self.$$scope.layout = layout;
+                self.$$scope.layout = layout;
 
-                    self.$$createColumns();
-                });
+                self.$$createColumns();
             }
         };
 
         /**
-         * DOCME
+         * @private
          *
-         * @return {[type]} [description]
+         * Event that will be triggered when the source model has changed.
          *
          */
         Photogrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
@@ -236,9 +267,8 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
         };
 
         /**
-         * DOCME
-         *
-         * @return {[type]} [description]
+         * Destroys the directive. Takes care of cleaning all
+         * watchers and event handlers.
          *
          */
         Photogrid.prototype.destroy = function destroy () {
@@ -250,12 +280,6 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
         };
 
         return {
-            /**
-             * DOCME
-             *
-             * @return {[type]} [description]
-             *
-             */
             create : function create (scope, element) {
                 return new Photogrid(scope, element);
             }

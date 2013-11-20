@@ -27,7 +27,6 @@ module.exports = function (config) {
             'src/index.js',
             'src/descriptor.js',
             'src/photogrid.js',
-            'test/assets/main.css',
             'test/*.js'
         ],
 
