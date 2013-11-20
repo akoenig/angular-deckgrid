@@ -20,7 +20,8 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         'use strict';
 
         /**
-         * DOCME
+         * This is a wrapper around the AngularJS
+         * directive description object.
          *
          */
         function Descriptor () {
@@ -43,9 +44,10 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         }
 
         /**
-         * DOCME
+         * @private
          *
-         * @return {[type]} [description]
+         * Cleanup method. Will be called when the
+         * photogrid directive should be destroyed.
          *
          */
         Descriptor.prototype.$$destroy = function $$destroy () {
@@ -55,10 +57,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         /**
          * @private
          *
-         * @param  {[type]} $scope [description]
-         * @param  {[type]} elem   [description]
-         * @param  {[type]} attrs  [description]
-         * @return {[type]}        [description]
+         * The photogrid link method. Will instantiate the photogrid.
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
@@ -70,12 +69,6 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
         };
 
         return {
-            /**
-             * DOCME
-             *
-             * @return {[type]} [description]
-             *
-             */
             create : function create () {
                 return new Descriptor();
             }

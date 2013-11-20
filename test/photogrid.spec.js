@@ -42,7 +42,7 @@ describe('Unit: The photogrid', function () {
 
             $window.getComputedStyle = function () {
                 return {
-                    content: "'"+ columnCount + " .column.size-1of" + columnCount + "'"
+                    content: "'"+ columnCount + " .column.size-1-" + columnCount + "'"
                 };
             };
 
