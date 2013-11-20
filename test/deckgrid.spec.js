@@ -1,5 +1,5 @@
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -11,7 +11,7 @@
  *
  */
 
-describe('Unit: The photogrid', function () {
+describe('Unit: The angular-deckgrid', function () {
 
     'use strict';
 
@@ -27,7 +27,7 @@ describe('Unit: The photogrid', function () {
             {id: 'photo-7', src: 'http://lorempixel.com/300/400'}
         ];
 
-    beforeEach(angular.mock.module('akoenig.photogrid'));
+    beforeEach(angular.mock.module('akoenig.deckgrid'));
 
     it('should have three columns and 3 images in the first column', inject([
 
@@ -51,9 +51,9 @@ describe('Unit: The photogrid', function () {
             //
             // Mock the template request
             //
-            $templateCache.put('views/photogrid-photo.html', '<img data-ng-src="{{photo.src}}" alt="{{photo.id}}" src="">');
+            $templateCache.put('views/deckgrid-photo.html', '<img data-ng-src="{{photo.src}}" alt="{{photo.id}}" src="">');
 
-            $elem = $compile('<photogrid class="photogrid" source="photos" photoTemplate="views/photogrid-photo.html"></photogrid>')($rootScope);
+            $elem = $compile('<deckgrid class="deckgrid" source="photos" itemTemplate="views/deckgrid-photo.html"></deckgrid>')($rootScope);
 
             $rootScope.$digest();
 

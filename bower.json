@@ -1,10 +1,10 @@
 {
-  "name": "angular-photogrid",
+  "name": "angular-deckgrid",
   "version": "0.1.0",
   "author": "André König (andre.koenig@posteo.de)",
-  "description": "A masonry-like photogrid for AngularJS",
+  "description": "A masonry-like, responsive grid for AngularJS",
   "license": "MIT",
-  "main": "./angular-photogrid.js",
+  "main": "./angular-deckgrid.js",
   "ignore": [
     "**/.*",
     "node_modules",

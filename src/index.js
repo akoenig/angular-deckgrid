@@ -1,5 +1,5 @@
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -11,16 +11,16 @@
  *
  */
 
-angular.module('akoenig.photogrid', []);
+angular.module('akoenig.deckgrid', []);
 
-angular.module('akoenig.photogrid').directive('photogrid', [
+angular.module('akoenig.deckgrid').directive('deckgrid', [
 
-    'PhotogridDescriptor',
+    'DeckgridDescriptor',
 
-    function initialize (PhotogridDescriptor) {
+    function initialize (DeckgridDescriptor) {
 
         'use strict';
 
-        return PhotogridDescriptor.create();
+        return DeckgridDescriptor.create();
     }
 ]);

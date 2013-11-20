@@ -1,5 +1,5 @@
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 banner: banner
             },
             dist: {
-                src: ['src/index.js', 'src/descriptor.js', 'src/photogrid.js'],
+                src: ['src/index.js', 'src/descriptor.js', 'src/deckgrid.js'],
                 dest: '<%= pkg.name %>.js'
             }
         },
@@ -44,7 +44,8 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                'src/*.js'
+                'src/*.js',
+                'test/*.js'
             ]
         },
         karma: {

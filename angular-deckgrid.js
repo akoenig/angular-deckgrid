@@ -1,6 +1,6 @@
-/*! angular-photogrid (v0.1.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.1.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -12,21 +12,21 @@
  *
  */
 
-angular.module('akoenig.photogrid', []);
+angular.module('akoenig.deckgrid', []);
 
-angular.module('akoenig.photogrid').directive('photogrid', [
+angular.module('akoenig.deckgrid').directive('deckgrid', [
 
-    'PhotogridDescriptor',
+    'DeckgridDescriptor',
 
-    function initialize (PhotogridDescriptor) {
+    function initialize (DeckgridDescriptor) {
 
         'use strict';
 
-        return PhotogridDescriptor.create();
+        return DeckgridDescriptor.create();
     }
 ]);
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -38,11 +38,11 @@ angular.module('akoenig.photogrid').directive('photogrid', [
  *
  */
 
-angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
+angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
-    'Photogrid',
+    'Deckgrid',
 
-    function initialize (Photogrid) {
+    function initialize (Deckgrid) {
 
         'use strict';
 
@@ -52,10 +52,10 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
          *
          */
         function Descriptor () {
-            this.restrict = 'E';
+            this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                                '<div data-ng-repeat="photo in column" data-ng-include="photoTemplate"></div>' +
+                                '<div data-ng-repeat="item in column" data-ng-include="itemTemplate"></div>' +
                             '</div>';
 
             this.scope = {
@@ -65,7 +65,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
             //
             // Will be created in the linking function.
             //
-            this.$$photogrid = null;
+            this.$$deckgrid = null;
 
             this.link = this.$$link.bind(this);
         }
@@ -74,25 +74,25 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
          * @private
          *
          * Cleanup method. Will be called when the
-         * photogrid directive should be destroyed.
+         * deckgrid directive should be destroyed.
          *
          */
         Descriptor.prototype.$$destroy = function $$destroy () {
-            this.$$photogrid.destroy();
+            this.$$deckgrid.destroy();
         };
 
         /**
          * @private
          *
-         * The photogrid link method. Will instantiate the photogrid.
+         * The deckgrid link method. Will instantiate the deckgrid.
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            scope.photoTemplate = attrs.phototemplate;
+            scope.itemTemplate = attrs.itemtemplate;
 
-            this.$$photogrid = Photogrid.create(scope, elem[0]);
+            this.$$deckgrid = Deckgrid.create(scope, elem[0]);
         };
 
         return {
@@ -104,7 +104,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
 ]);
 
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -116,7 +116,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
  *
  */
 
-angular.module('akoenig.photogrid').factory('Photogrid', [
+angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
     '$window',
 
@@ -125,10 +125,10 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
         'use strict';
 
         /**
-         * The photogrid directive.
+         * The deckgrid directive.
          *
          */
-        function Photogrid (scope, element) {
+        function Deckgrid (scope, element) {
             var self = this,
                 watcher;
 
@@ -156,15 +156,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
             //
             // Register window resize change event.
             //
-            watcher = (function $watchWindowResize () {
-                var handler = self.$$onWindowResize.bind(self);
-
-                window.addEventListener('resize', handler);
-
-                return function off () {
-                    window.removeEventListener('resize', handler);
-                };
-            })();
+            watcher = angular.element($window).on('resize', self.$$onWindowResize.bind(self));
             this.$$watchers.push(watcher);
         }
 
@@ -173,7 +165,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          *
          * Creates the column segmentation. With other words:
          * This method creates the internal data structure from the
-         * passed "source" attribute. Every photo within this "source"
+         * passed "source" attribute. Every item within this "source"
          * model will be passed into this internal column structure by
          * reference. So if you modify the data within your controller
          * this directive will reflect these changes immediately.
@@ -181,19 +173,19 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * NOTE that calling this method will trigger a complete template "redraw".
          *
          */
-        Photogrid.prototype.$$createColumns = function $$createColumns () {
+        Deckgrid.prototype.$$createColumns = function $$createColumns () {
             var self = this;
 
             this.$$scope.columns = [];
 
-            angular.forEach(this.$$scope.model, function onIteration (photo, index) {
+            angular.forEach(this.$$scope.model, function onIteration (item, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
                     self.$$scope.columns[column] = [];
                 }
 
-                self.$$scope.columns[column].push(photo);
+                self.$$scope.columns[column].push(item);
             });
         };
 
@@ -204,7 +196,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          *
          * Example:
          *
-         *     .photogrid::before {
+         *     .deckgrid::before {
          *         content: '3 .column.size-1-3';
          *     }
          *
@@ -214,7 +206,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * You are responsible for defining the respective styles within your CSS.
          *
          */
-        Photogrid.prototype.$$getLayout = function $$getLayout () {
+        Deckgrid.prototype.$$getLayout = function $$getLayout () {
             var content = $window.getComputedStyle(this.$$elem, ':before').content,
                 layout;
 
@@ -222,6 +214,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
                 layout = {};
 
                 content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
+                content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
                 content = content.split(' ');
 
                 layout.columns = (content[0] | 0);
@@ -237,7 +230,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * Event that will be triggered on "window resize".
          *
          */
-        Photogrid.prototype.$$onWindowResize = function $$onWindowResize () {
+        Deckgrid.prototype.$$onWindowResize = function $$onWindowResize () {
             var self = this,
                 layout = this.$$getLayout();
 
@@ -258,7 +251,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * Event that will be triggered when the source model has changed.
          *
          */
-        Photogrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
+        Deckgrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
             var self = this;
 
             if (oldModel.length !== newModel.length) {
@@ -271,7 +264,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * watchers and event handlers.
          *
          */
-        Photogrid.prototype.destroy = function destroy () {
+        Deckgrid.prototype.destroy = function destroy () {
             var i = this.$$watchers.length - 1;
 
             for (i; i >= 0; i = i - 1) {
@@ -281,7 +274,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
 
         return {
             create : function create (scope, element) {
-                return new Photogrid(scope, element);
+                return new Deckgrid(scope, element);
             }
         };
     }

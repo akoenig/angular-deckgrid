@@ -1,5 +1,5 @@
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -11,11 +11,11 @@
  *
  */
 
-angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
+angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
-    'Photogrid',
+    'Deckgrid',
 
-    function initialize (Photogrid) {
+    function initialize (Deckgrid) {
 
         'use strict';
 
@@ -25,10 +25,10 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
          *
          */
         function Descriptor () {
-            this.restrict = 'E';
+            this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                                '<div data-ng-repeat="photo in column" data-ng-include="photoTemplate"></div>' +
+                                '<div data-ng-repeat="item in column" data-ng-include="itemTemplate"></div>' +
                             '</div>';
 
             this.scope = {
@@ -38,7 +38,7 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
             //
             // Will be created in the linking function.
             //
-            this.$$photogrid = null;
+            this.$$deckgrid = null;
 
             this.link = this.$$link.bind(this);
         }
@@ -47,25 +47,25 @@ angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
          * @private
          *
          * Cleanup method. Will be called when the
-         * photogrid directive should be destroyed.
+         * deckgrid directive should be destroyed.
          *
          */
         Descriptor.prototype.$$destroy = function $$destroy () {
-            this.$$photogrid.destroy();
+            this.$$deckgrid.destroy();
         };
 
         /**
          * @private
          *
-         * The photogrid link method. Will instantiate the photogrid.
+         * The deckgrid link method. Will instantiate the deckgrid.
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            scope.photoTemplate = attrs.phototemplate;
+            scope.itemTemplate = attrs.itemtemplate;
 
-            this.$$photogrid = Photogrid.create(scope, elem[0]);
+            this.$$deckgrid = Deckgrid.create(scope, elem[0]);
         };
 
         return {

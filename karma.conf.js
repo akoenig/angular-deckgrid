@@ -1,5 +1,5 @@
 /*
- * photogrid
+ * angular-deckgrid
  *
  * Copyright(c) 2013 André König <akoenig@posteo.de>
  * MIT Licensed
@@ -26,7 +26,7 @@ module.exports = function (config) {
             'bower_components/angular-mocks/angular-mocks.js',
             'src/index.js',
             'src/descriptor.js',
-            'src/photogrid.js',
+            'src/deckgrid.js',
             'test/*.js'
         ],
 
