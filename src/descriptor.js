@@ -6,15 +6,18 @@
  *
  */
 
-'use strict';
-
-var akoenig = akoenig || {};
+/**
+ * @author André König (andre.koenig@posteo.de)
+ *
+ */
 
 angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
 
     'Photogrid',
 
     function initialize (Photogrid) {
+
+        'use strict';
 
         /**
          * DOCME

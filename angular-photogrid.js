@@ -1,3 +1,4 @@
+/*! angular-photogrid (v0.1.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
 /*
  * photogrid
  *
@@ -6,22 +7,119 @@
  *
  */
 
-'use strict';
 
-var akoenig = akoenig || {};
+angular.module('akoenig.photogrid').directive('photogrid', [
 
-angular.module('akoenig.photogrid').factory('Photogrid', [
+    'PhotogridDescriptor',
 
-    '$compile',
-    '$timeout',
+    function initialize (PhotogridDescriptor) {
 
-    function initialize ($compile, $timeout) {
+        'use strict';
+
+        return PhotogridDescriptor.create();
+    }
+]);
+/*
+ * photogrid
+ *
+ * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * MIT Licensed
+ *
+ */
+
+
+angular.module('akoenig.photogrid').factory('PhotogridDescriptor', [
+
+    'Photogrid',
+
+    function initialize (Photogrid) {
+
+        'use strict';
 
         /**
          * DOCME
          *
          */
-        function Photogrid (scope, element, templateUrl) {
+        function Descriptor () {
+            this.restrict = 'E';
+
+            this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
+                                '<div data-ng-repeat="photo in column" data-ng-include="photoTemplate"></div>' +
+                            '</div>';
+
+            this.scope = {
+                'model': '=source'
+            };
+
+            //
+            // Will be created in the linking function.
+            //
+            this.$$photogrid = null;
+
+            this.link = this.$$link.bind(this);
+        }
+
+        /**
+         * DOCME
+         *
+         * @return {[type]} [description]
+         *
+         */
+        Descriptor.prototype.$$destroy = function $$destroy () {
+            this.$$photogrid.destroy();
+        };
+
+        /**
+         * @private
+         *
+         * @param  {[type]} $scope [description]
+         * @param  {[type]} elem   [description]
+         * @param  {[type]} attrs  [description]
+         * @return {[type]}        [description]
+         *
+         */
+        Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
+            scope.$on('$destroy', this.$$destroy.bind(this));
+
+            scope.photoTemplate = attrs.phototemplate;
+
+            this.$$photogrid = Photogrid.create(scope, elem[0]);
+        };
+
+        return {
+            /**
+             * DOCME
+             *
+             * @return {[type]} [description]
+             *
+             */
+            create : function create () {
+                return new Descriptor();
+            }
+        };
+    }
+]);
+
+/*
+ * photogrid
+ *
+ * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * MIT Licensed
+ *
+ */
+
+
+angular.module('akoenig.photogrid').factory('Photogrid', [
+
+    function initialize () {
+
+        'use strict';
+
+        /**
+         * DOCME
+         *
+         */
+        function Photogrid (scope, element) {
             var self = this,
                 watcher;
 
@@ -35,7 +133,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
             // The configuration will be parsed out of the elements pseudo "before element."
             //
             this.$$scope.layout = this.$$getLayout();
-console.log('HERE');
+
             this.$$createColumns();
 
             //
@@ -57,16 +155,6 @@ console.log('HERE');
                 };
             })();
             this.$$watchers.push(watcher);
-
-// var id;
-// function watchModel () {
-//     $timeout.cancel(id);
-//     console.log(self.$$scope.columns.first.photos[0]);
-
-//     id = $timeout(watchModel, 5000);
-// }
-
-// id = $timeout(watchModel, 5000);
         }
 
         /**
@@ -87,7 +175,7 @@ console.log('HERE');
                     self.$$scope.columns[column] = [];
                 }
 
-                self.$$scope.columns[column].push(photo)
+                self.$$scope.columns[column].push(photo);
             });
         };
 
@@ -168,8 +256,8 @@ console.log('HERE');
              * @return {[type]} [description]
              *
              */
-            create : function create (scope, element, templateUrl) {
-                return new Photogrid(scope, element, templateUrl);
+            create : function create (scope, element) {
+                return new Photogrid(scope, element);
             }
         };
     }
