@@ -21,7 +21,7 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * DOCME
          *
          */
-        function Photogrid (scope, element) {
+        function Photogrid (scope, element, templateUrl) {
             var self = this,
                 watcher;
 
@@ -30,11 +30,12 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
 
             this.$$scope = scope;
             this.$$scope.columns = [];
-
+console.log(this.$$scope);
             //
             // The configuration will be parsed out of the elements pseudo "before element."
             //
             this.$$scope.layout = this.$$getLayout();
+
             this.$$createColumns();
 
             //
@@ -139,9 +140,12 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
          * @return {[type]} [description]
          *
          */
-        Photogrid.prototype.$$onModelChange = function $$onModelChange () {
-            console.log('Model change');
-            console.log(arguments);
+        Photogrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
+            var self = this;
+
+            if (oldModel.length !== newModel.length) {
+                self.$$createColumns();
+            }
         };
 
         /**
@@ -165,8 +169,8 @@ angular.module('akoenig.photogrid').factory('Photogrid', [
              * @return {[type]} [description]
              *
              */
-            create : function create (scope, element) {
-                return new Photogrid(scope, element);
+            create : function create (scope, element, templateUrl) {
+                return new Photogrid(scope, element, templateUrl);
             }
         };
     }
