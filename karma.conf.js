@@ -34,11 +34,11 @@ module.exports = function (config) {
 
         port: 8080,
 
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
         autoWatch: false,
 
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
 
         singleRun: true
     });
