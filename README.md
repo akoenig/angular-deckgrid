@@ -49,7 +49,7 @@ Okay, you have your controller ready and your template is fine so far. The only 
     ];
 
 **Your possible card template**
-_(it is completly up to you)_
+_(it is completely up to you)_
 
     <div class="card">
         <div class="l-header">
