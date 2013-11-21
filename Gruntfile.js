@@ -50,8 +50,7 @@ module.exports = function (grunt) {
         },
         karma: {
             dist: {
-                configFile: 'karma.conf.js',
-                browsers: ['Chrome']
+                configFile: 'karma.conf.js'
             },
             watch: {
                 configFile: 'karma.conf.js',
