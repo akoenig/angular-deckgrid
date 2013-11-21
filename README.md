@@ -51,10 +51,8 @@ Okay, you have your controller ready and your template is fine so far. The only 
 **Your possible card template**
 _(it is completely up to you)_
 
-    <div class="card">
-        <div class="l-header">
-            <h1>{{card.title}}</h1>
-        </div>
+    <div class="a-card">
+        <h1>{{card.title}}</h1>
 
         <img src="" data-ng-src="{{card.src}}">
     </div>
