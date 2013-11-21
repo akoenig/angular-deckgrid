@@ -25,9 +25,7 @@ A lightweight masonry-like, responsive grid for AngularJS.
 
 The directive does not depend on the visual representation. All the responsiveness and beauty comes from your CSS file. But wait a second. Let's take a look how the directive will be integrated. An example:
 
-    ```html
     <div deckgrid source="photos" cardTemplate="templates/deckgrid-card.html" class="deckgrid"></div>
-    ```
 
 Okay, we assume that you have a collection of photos and you want to display these in a _deckgrid_, where every photo provides a _name_ and a _source_ URL. The internal structure of this collection is completely up to you. You can use any collection structure you want. No restrictions at all.
 
