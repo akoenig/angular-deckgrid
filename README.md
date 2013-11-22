@@ -92,6 +92,16 @@ In order to support different grid representations for different screen sizes, y
 
 This will define that for a device with a maximum screen width of 480px, only one column should be used. As I mentioned before. It is completely up to you how to define the column sizes. Go crazy.
 
+## Changelog
+
+### Version 0.1.1 (20131122)
+
+- [Feature] Added log message for the case when the CSS configuration is not available (#1)
+
+### Version 0.1.0 (20131121)
+
+- Initial release. Functionality for rendering grids.
+
 ## Credits
 
 * [AngularJS](http://angularjs.org) Needless to say. You know the beast. One of the best frontend frameworks in the world.

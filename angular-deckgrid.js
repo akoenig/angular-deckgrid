@@ -1,14 +1,14 @@
-/*! angular-deckgrid (v0.1.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.1.1) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (akoenig@posteo.de)
  *
  */
 
@@ -28,13 +28,13 @@ angular.module('akoenig.deckgrid').directive('deckgrid', [
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (akoenig@posteo.de)
  *
  */
 
@@ -106,21 +106,22 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (akoenig@posteo.de)
  *
  */
 
 angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
     '$window',
+    '$log',
 
-    function initialize ($window) {
+    function initialize ($window, $log) {
 
         'use strict';
 
@@ -176,6 +177,11 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         Deckgrid.prototype.$$createColumns = function $$createColumns () {
             var self = this;
 
+            if (!this.$$scope.layout) {
+                return $log.error('angular-deckgrid: No CSS configuration found (see ' +
+                                   'https://github.com/akoenig/angular-deckgrid#the-grid-configuration)');
+            }
+
             this.$$scope.columns = [];
 
             angular.forEach(this.$$scope.model, function onIteration (card, index) {
@@ -211,14 +217,15 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 layout;
 
             if (content) {
-                layout = {};
-
                 content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
                 content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
                 content = content.split(' ');
 
-                layout.columns = (content[0] | 0);
-                layout.classList = content[1].replace(/\./g, ' ').trim();
+                if (2 === content.length) {
+                    layout = {};
+                    layout.columns = (content[0] | 0);
+                    layout.classList = content[1].replace(/\./g, ' ').trim();
+                }
             }
 
             return layout;
