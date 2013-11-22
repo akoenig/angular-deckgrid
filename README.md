@@ -96,7 +96,7 @@ This will define that for a device with a maximum screen width of 480px, only on
 
 ### Version 0.1.1 (20131122)
 
-- [Feature] Added log message for the case when the CSS configuration is not available (#1)
+- [Feature] Added log message for the case when the CSS configuration is not available ([#1](https://github.com/akoenig/angular-deckgrid/issues/1))
 
 ### Version 0.1.0 (20131121)
 
