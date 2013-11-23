@@ -61,7 +61,7 @@ That's all! Ehm, no. If you run your application now you will notice that there 
 
 The grid items will be distributed by your configured CSS selectors. An example:
 
-    .deckgrid::before {
+    .deckgrid[deckgrid]::before {
         /* Defines that the grid should have 3 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
         display:none;
@@ -80,7 +80,7 @@ The grid items will be distributed by your configured CSS selectors. An example:
 In order to support different grid representations for different screen sizes, you can define the respective media queries like:
 
     @media screen and (max-width: 480px){
-        .deckgrid::before {
+        .deckgrid[deckgrid]::before {
             content: '1 .column.column-1-1';
         }
 
@@ -93,6 +93,10 @@ In order to support different grid representations for different screen sizes, y
 This will define that for a device with a maximum screen width of 480px, only one column should be used. As I mentioned before. It is completely up to you how to define the column sizes. Go crazy.
 
 ## Changelog
+
+### Version 0.2.0 (20131123)
+
+- [Feature] Better event handling of media query changes.
 
 ### Version 0.1.1 (20131122)
 
