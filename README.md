@@ -91,6 +91,7 @@ In order to support different grid representations for different screen sizes, y
     ...
 
 This will define that for a device with a maximum screen width of 480px, only one column should be used. As I mentioned before. It is completely up to you how to define the column sizes. Go crazy.
+Although this example represents an adaptive kind of layout you are able to realize a responsive layout as well. The module is for the segmentation part, you have the full control over your layout.
 
 ## Changelog
 
