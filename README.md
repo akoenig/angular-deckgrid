@@ -1,6 +1,6 @@
 # angular-deckgrid
 
-A lightweight masonry-like, responsive grid for AngularJS.
+A lightweight masonry-like grid for AngularJS.
 
 [Website / Demo](http://akoenig.github.io/angular-deckgrid)
 
