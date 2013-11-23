@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.1.1) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.2.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -155,11 +155,77 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             this.$$watchers.push(watcher);
 
             //
-            // Register window resize change event.
+            // Register media query change events.
             //
-            watcher = angular.element($window).on('resize', self.$$onWindowResize.bind(self));
-            this.$$watchers.push(watcher);
+            angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
+                function onDestroy () {
+                    rule.removeListener(self.$$onMediaQueryChange.bind(self));
+                }
+
+                rule.addListener(self.$$onMediaQueryChange.bind(self));
+
+                self.$$watchers.push(onDestroy);
+            });
         }
+
+        /**
+         * @private
+         *
+         * Extracts the media queries out of the stylesheets.
+         *
+         * This method will fetch the media queries out of the stylesheets that are
+         * responsible for styling the angular-deckgrid.
+         *
+         * @return {array} An array with all respective styles.
+         *
+         */
+        Deckgrid.prototype.$$getMediaQueries = function $$getMediaQueries () {
+            var stylesheets = [],
+                mediaQueries = [];
+
+            stylesheets = Array.prototype.concat.call(
+                Array.prototype.slice.call(document.querySelectorAll('style[type=\'text/css\']')),
+                Array.prototype.slice.call(document.querySelectorAll('link[rel=\'stylesheet\']'))
+            );
+
+            function extractRules (stylesheet) {
+                try {
+                    return (stylesheet.sheet.cssRules || []);
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function hasDeckgridStyles (rule) {
+                var i = 0;
+
+                if (!rule.media) {
+                    return false;
+                }
+
+                i = rule.cssRules.length - 1;
+
+                for (i; i >= 0; i = i - 1) {
+                    if (rule.cssRules[i].selectorText.match(/\[(\w*-)?deckgrid\]::?before/g)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            angular.forEach(stylesheets, function onIteration (stylesheet) {
+                var rules = extractRules(stylesheet);
+
+                angular.forEach(rules, function inRuleIteration (rule) {
+                    if (hasDeckgridStyles(rule)) {
+                        mediaQueries.push($window.matchMedia(rule.media.mediaText));
+                    }
+                });
+            });
+
+            return mediaQueries;
+        };
 
         /**
          * @private
@@ -234,10 +300,10 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         /**
          * @private
          *
-         * Event that will be triggered on "window resize".
+         * Event that will be triggered if a CSS media query changed.
          *
          */
-        Deckgrid.prototype.$$onWindowResize = function $$onWindowResize () {
+        Deckgrid.prototype.$$onMediaQueryChange = function $$onMediaQueryChange () {
             var self = this,
                 layout = this.$$getLayout();
 
