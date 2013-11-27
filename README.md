@@ -95,6 +95,10 @@ Although this example represents an adaptive kind of layout you are able to real
 
 ## Changelog
 
+### Version 0.2.1 (20131127)
+
+- [Feature] There are some directives in the template of the `angular-deckgrid`, which creates new scopes. In order to access the parent scope which is responsible for embedding the `angular-deckgrid` directive, this release contains a shortcut for accessing this scope (`{{mother.*}}`).
+
 ### Version 0.2.0 (20131123)
 
 - [Feature] Better event handling of media query changes.

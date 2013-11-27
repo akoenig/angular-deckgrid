@@ -65,6 +65,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
             scope.cardTemplate = attrs.cardtemplate;
 
+            scope.mother = scope.$parent;
+
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
         };
 
