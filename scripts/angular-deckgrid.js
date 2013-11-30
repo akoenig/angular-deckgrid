@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.2.0) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.2.1) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -91,6 +91,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             scope.$on('$destroy', this.$$destroy.bind(this));
 
             scope.cardTemplate = attrs.cardtemplate;
+
+            scope.mother = scope.$parent;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
         };
