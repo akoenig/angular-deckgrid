@@ -93,11 +93,19 @@ In order to support different grid representations for different screen sizes, y
 This will define that for a device with a maximum screen width of 480px, only one column should be used. As I mentioned before. It is completely up to you how to define the column sizes. Go crazy.
 Although this example represents an adaptive kind of layout you are able to realize a responsive layout as well. The module is for the segmentation part, you have the full control over your layout.
 
+### Scope
+
+You may wonder why it is not possible to access your scope in the card template. The `angular-deckgrid` uses directives of AngularJS internally which creates new scopes. To avoid the "anti-pattern" of using "$parent.$parent.$parent.yourFunction()" in the card template, the `angular-deckgrid` provides a shortcut `mother.*` which points to your scope. An example:
+
+    <button data-ng-click="mother.doSomething()">Click me!</button>
+    
+A click on this button would execute the `doSomething()` function in your scope.
+
 ## Changelog
 
 ### Version 0.2.1 (20131127)
 
-- [Feature] There are some directives in the template of the `angular-deckgrid`, which creates new scopes. In order to access the parent scope which is responsible for embedding the `angular-deckgrid` directive, this release contains a shortcut for accessing this scope (`{{mother.*}}`).
+- [Feature] There are some directives in the template of the `angular-deckgrid`, which creates new scopes. In order to access the parent scope which is responsible for embedding the `angular-deckgrid` directive, this release contains a shortcut for accessing your scope (`{{mother.*}}`).
 
 ### Version 0.2.0 (20131123)
 
