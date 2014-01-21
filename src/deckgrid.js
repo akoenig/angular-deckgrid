@@ -92,16 +92,20 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             }
 
             function hasDeckgridStyles (rule) {
-                var i = 0;
+                var i = 0,
+                selector,
+                re;
 
                 if (!rule.media) {
                     return false;
                 }
 
                 i = rule.cssRules.length - 1;
+                re = /\[(\w*-)?deckgrid\]::?before/g;
 
                 for (i; i >= 0; i = i - 1) {
-                    if (rule.cssRules[i].selectorText.match(/\[(\w*-)?deckgrid\]::?before/g)) {
+                    selector = rule.cssRules[i].selectorText;
+                    if (selector && selector.match (re)) {
                         return true;
                     }
                 }
