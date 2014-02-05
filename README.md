@@ -62,7 +62,7 @@ That's all! Ehm, no. If you run your application now you will notice that there 
 The grid items will be distributed by your configured CSS selectors. An example:
 
     .deckgrid[deckgrid]::before {
-        /* Defines that the grid should have 3 columns. Each column will have the classes 'column' and 'column-1-4' */
+        /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
         display:none;
     }
