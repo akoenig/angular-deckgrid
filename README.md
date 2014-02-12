@@ -127,3 +127,5 @@ A click on this button would execute the `doSomething()` function in your scope.
 ## Author
 
 Copyright 2013, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/akoenig/angular-deckgrid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
