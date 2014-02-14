@@ -1,14 +1,14 @@
-/*! angular-deckgrid (v0.2.1) - Copyright: 2013, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.2.2) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
+ * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (akoenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de)
  *
  */
 
@@ -28,13 +28,13 @@ angular.module('akoenig.deckgrid').directive('deckgrid', [
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
+ * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (akoenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de)
  *
  */
 
@@ -108,13 +108,13 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 Andre Koenig <akoenig@posteo.de>
+ * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (akoenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de)
  *
  */
 
@@ -199,16 +199,20 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             }
 
             function hasDeckgridStyles (rule) {
-                var i = 0;
+                var regexe   = /\[(\w*-)?deckgrid\]::?before/g,
+                    i        = 0,
+                    selector = '';
 
-                if (!rule.media) {
+                if (!rule.media && angular.isUndefined(rule.cssRules)) {
                     return false;
                 }
 
                 i = rule.cssRules.length - 1;
 
                 for (i; i >= 0; i = i - 1) {
-                    if (rule.cssRules[i].selectorText.match(/\[(\w*-)?deckgrid\]::?before/g)) {
+                    selector = rule.cssRules[i].selectorText;
+
+                    if (angular.isDefined(selector) && selector.match(regexe)) {
                         return true;
                     }
                 }
