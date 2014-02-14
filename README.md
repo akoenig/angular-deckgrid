@@ -101,7 +101,15 @@ You may wonder why it is not possible to access your scope in the card template.
     
 A click on this button would execute the `doSomething()` function in your scope.
 
+## Deckgrid in action
+
+Do you use the `angular-deckgrid` and would like to be featured here? Just send me an [email](mailto:andre.koenig@posteo.de) and I will add you and your application to this list.
+
 ## Changelog
+
+### Version 0.2.2 (20140214)
+
+- [Bugfix] Implemented check for the case if the `selectorText` of the css rules is undefined.
 
 ### Version 0.2.1 (20131127)
 

@@ -1,7 +1,7 @@
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
  * MIT Licensed
  *
  */
@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
     'use strict';
 
-    var banner = '/*! <%= pkg.name %> (v<%= pkg.version %>) - Copyright: 2013, <%= pkg.author %> - <%= pkg.license %> */\n';
+    var banner = '/*! <%= pkg.name %> (v<%= pkg.version %>) - Copyright: 2013 - 2014, <%= pkg.author %> - <%= pkg.license %> */\n';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('bower.json'),

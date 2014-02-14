@@ -1,7 +1,7 @@
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013 André König <akoenig@posteo.de>
+ * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
  * MIT Licensed
  *
  */
