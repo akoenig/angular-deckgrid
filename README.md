@@ -101,9 +101,11 @@ You may wonder why it is not possible to access your scope in the card template.
     
 A click on this button would execute the `doSomething()` function in your scope.
 
-## Deckgrid in action
+## In action
 
 Do you use the `angular-deckgrid` and would like to be featured here? Just send me an [email](mailto:andre.koenig@posteo.de) and I will add you and your application to this list.
+
+- [raindrop.io](http://raindrop.io/): Smart bookmarks - A beautiful way to remember the most important
 
 ## Changelog
 
