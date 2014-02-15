@@ -137,5 +137,3 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 ## Author
 
 Copyright 2013, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/akoenig/angular-deckgrid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
