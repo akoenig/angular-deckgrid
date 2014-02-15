@@ -96,7 +96,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                     i        = 0,
                     selector = '';
 
-                if (!rule.media && angular.isUndefined(rule.cssRules)) {
+                if (!rule.media || angular.isUndefined(rule.cssRules)) {
                     return false;
                 }
 
