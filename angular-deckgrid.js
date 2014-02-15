@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.2.2) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.2.3) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -203,7 +203,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                     i        = 0,
                     selector = '';
 
-                if (!rule.media && angular.isUndefined(rule.cssRules)) {
+                if (!rule.media || angular.isUndefined(rule.cssRules)) {
                     return false;
                 }
 

@@ -109,6 +109,10 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
+### Version 0.2.3 (20140215)
+
+- [Bugfix] If `rule.cssRules` is undefined, the style investigation should always exit.
+
 ### Version 0.2.2 (20140214)
 
 - [Bugfix] Implemented check for the case if the `selectorText` of the css rules is undefined.
