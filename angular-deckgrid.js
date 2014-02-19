@@ -332,7 +332,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          * Event that will be triggered when the source model has changed.
          *
          */
-        Deckgrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
+        Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
             var self = this;
 
             if (oldModel.length !== newModel.length) {
