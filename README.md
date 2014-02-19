@@ -55,6 +55,15 @@ _(it is completely up to you)_
         <img src="" data-ng-src="{{card.src}}">
     </div>
 
+**Accessing the card's index**
+
+In order to use the index of the current card from within the card's template, use the `$index` property of the `card` object, like:
+
+    <span>{{card.$index}}</span>
+
+This index reflects the index of the corresponding object in the source collection.
+
+
 That's all! Ehm, no. If you run your application now you will notice that there is only one column. What is missing? Well, we have to define the configuration for the visual representation. And what is the best place for something like this? Yes, for sure! Your CSS file(s).
 
 ## The grid configuration
