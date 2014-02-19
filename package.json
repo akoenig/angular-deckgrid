@@ -9,7 +9,9 @@
     "grunt-contrib-jshint": "~0.7.1",
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-karma": "~0.7.1"
+    "grunt-karma": "~0.7.1",
+    "karma-jasmine": "~0.1.5",
+    "karma-chrome-launcher": "~0.1.2"
   },
   "scripts": {
     "test": "grunt test"
