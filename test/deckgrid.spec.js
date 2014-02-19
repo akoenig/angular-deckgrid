@@ -38,7 +38,8 @@ describe('Unit: The angular-deckgrid', function () {
 
         function ($rootScope, $compile, $templateCache, $window) {
             var $photos,
-                $columns;
+                $columns,
+                $indices;
 
             $window.getComputedStyle = function () {
                 return {
@@ -51,14 +52,16 @@ describe('Unit: The angular-deckgrid', function () {
             //
             // Mock the template request
             //
-            $templateCache.put('views/deckgrid-card.html', '<img data-ng-src="{{card.src}}" alt="{{card.id}}" src="">');
+            $templateCache.put('views/deckgrid-card.html', '<img data-ng-src="{{card.src}}" alt="{{card.id}}" src="">' +
+                '<span class="index">{{card.$index}}</span>');
 
             $elem = $compile('<deckgrid class="deckgrid" source="photos" cardTemplate="views/deckgrid-card.html"></deckgrid>')($rootScope);
 
             $rootScope.$digest();
-
+            
             $photos = $elem.find('.column:first-child img');
             $columns = $elem.find('.column');
+            $indices = $elem.find('.column div:first-child span');
 
             expect($columns.length).toBe(columnCount);
             expect($photos.length).toBe(3);
@@ -66,6 +69,10 @@ describe('Unit: The angular-deckgrid', function () {
             expect($($photos[0]).attr('alt')).toBe(photos[0].id);
             expect($($photos[1]).attr('alt')).toBe(photos[3].id);
             expect($($photos[2]).attr('alt')).toBe(photos[6].id);
+
+            expect($($indices[0]).text()).toBe('0');
+            expect($($indices[1]).text()).toBe('1');
+            expect($($indices[2]).text()).toBe('2');
         }
     ]));
 });
