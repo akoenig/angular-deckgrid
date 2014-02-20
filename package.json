@@ -1,6 +1,6 @@
 {
   "name": "angular-deckgrid",
-  "version": "0.2.4-master",
+  "version": "0.3.0",
   "author": "André König (andre.koenig@posteo.de)",
   "description": "A lightweight masonry-like grid for AngularJS.",
   "license": "MIT",

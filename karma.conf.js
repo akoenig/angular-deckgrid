@@ -27,7 +27,7 @@ module.exports = function (config) {
             'src/index.js',
             'src/descriptor.js',
             'src/deckgrid.js',
-            'test/*.js'
+            'specs/*.js'
         ],
 
         exclude: [],

@@ -64,7 +64,7 @@ In order to use the index of the current card from within the card's template, u
 This index reflects the index of the corresponding object in the source collection.
 
 
-That's all! Ehm, no. If you run your application now you will notice that there is only one column. What is missing? Well, we have to define the configuration for the visual representation. And what is the best place for something like this? Yes, for sure! Your CSS file(s).
+That's all! Ehm, no. If you run your application now, you will notice that there is only one column. What is missing? Well, we have to define the configuration for the visual representation. And what is the best place for something like this? Yes, for sure! Your CSS file(s).
 
 ## The grid configuration
 
@@ -117,6 +117,10 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 - [raindrop.io](http://raindrop.io/): Smart bookmarks - A beautiful way to remember the most important
 
 ## Changelog
+
+### Version 0.3.0 (20140220)
+
+- [Feature] It is now possible to access the index of a card from within the card's template. This is accessible via the $index property of the card reference like {{card.$index}}.
 
 ### Version 0.2.3 (20140215)
 
