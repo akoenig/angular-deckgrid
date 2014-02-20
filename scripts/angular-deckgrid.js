@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.2.3) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.3.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -263,6 +263,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                     self.$$scope.columns[column] = [];
                 }
 
+                card.$index = index;
                 self.$$scope.columns[column].push(card);
             });
         };
@@ -332,7 +333,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          * Event that will be triggered when the source model has changed.
          *
          */
-        Deckgrid.prototype.$$onModelChange = function $$onModelChange (oldModel, newModel) {
+        Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
             var self = this;
 
             if (oldModel.length !== newModel.length) {

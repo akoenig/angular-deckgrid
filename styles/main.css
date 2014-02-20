@@ -66,10 +66,36 @@ img {
    transition: opacity 1s linear .2s;
 }
 
+.balloon-wrapper {
+    padding-top:40px;
+    opacity:1;
+    text-align:center;
+}
+
+.balloon {
+    background:#3498db;
+    border-radius:50%;
+    display:inline-block;
+    font-size:160%;
+    text-align:center;
+    height:100px;
+    line-height:100px;
+    width:100px;
+}
+
+.button-bar {
+    padding:20px 0 0;
+}
+
+.button-bar.button-bar-center {
+    text-align:center;
+}
+
 .button {
     border:3px solid #000;
     border-radius:8px;
     color:#000;
+    display:inline-block;
     opacity:.6;
     padding:15px 25px;
     -webkit-transition: opacity .4s linear 0s;
@@ -78,8 +104,28 @@ img {
     transition: opacity .4s linear 0s;
 }
 
+.button.button-not-animated {
+    -webkit-transition:none;
+    -moz-transition:none;
+    -o-transition:none;
+    transition:none;
+    opacity:1;
+}
+
 .button:hover {
     opacity:1;
+}
+
+.button.button-mini {
+    border:1px solid #000;
+    border-radius:4px;
+    font-size:60%;
+    padding:5px;
+}
+
+.button.button-primary {
+    background:#fff;
+    border-color:#3498db;
 }
 
 .image-round {
@@ -123,10 +169,6 @@ img {
     width:100%;
 }
 
-.button {
-    display:inline-block;
-}
-
 .deckgrid {
     margin:100px auto;
     padding:10px;
@@ -147,6 +189,28 @@ img {
     border:1px solid rgba(0, 0, 0, .15);
     border-radius:3px;
     margin:0 10px 10px 0;
+    position:relative;
+    padding-bottom:60px;
+}
+
+.photo .photo-index {
+    background:rgba(0, 0, 0, .9);
+    color:#fff;
+    position:absolute;
+    height:100%;
+    text-align:center;
+    width:100%;
+}
+
+.photo .photo-index p:first-child {
+    margin-top:20px;
+}
+
+.photo .button-bar {
+    position:absolute;
+    bottom:15px;
+    width:100%;
+    z-index:1;
 }
 
 .photo .photo-wrapper {
