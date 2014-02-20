@@ -83,14 +83,6 @@ img {
     width:100px;
 }
 
-.button-bar {
-    padding:20px 0 0;
-}
-
-.button-bar.button-bar-center {
-    text-align:center;
-}
-
 .button {
     border:3px solid #000;
     border-radius:8px;
@@ -114,18 +106,6 @@ img {
 
 .button:hover {
     opacity:1;
-}
-
-.button.button-mini {
-    border:1px solid #000;
-    border-radius:4px;
-    font-size:60%;
-    padding:5px;
-}
-
-.button.button-primary {
-    background:#fff;
-    border-color:#3498db;
 }
 
 .image-round {
@@ -190,7 +170,6 @@ img {
     border-radius:3px;
     margin:0 10px 10px 0;
     position:relative;
-    padding-bottom:60px;
 }
 
 .photo .photo-index {
@@ -203,7 +182,7 @@ img {
 }
 
 .photo .photo-index p:first-child {
-    margin-top:20px;
+    margin-top:10px;
 }
 
 .photo .button-bar {

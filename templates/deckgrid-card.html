@@ -1,25 +1,22 @@
 <div class="photo">
 
-    <div class="photo-index" data-ng-if="card.index">
-        <p>The $index of the card is</p>
+    <a href="" data-ng-click="card.showIndex = !card.showIndex">
+        <div class="photo-index" data-ng-if="card.showIndex">
+            <p>The $index of the card is</p>
 
-        <p class="balloon-wrapper">
-            <span class="balloon">{{card.$index}}</span>
-        </p>
-    </div>
-
-    <div class="photo-wrapper">
-        <img src="" data-ng-src="{{card.src}}" class="animation-fade" data-imageloaded data-loadedclass="animation-faded">
-    </div>
-
-
-    <div class="photo-description">
-        <h3>{{card.name}}</h3>
-        <p>Nice photo, eh.</p>
-
-        <div class="button-bar">
-            <a class="button button-mini button-primary button-not-animated" href="" data-ng-if="!card.index" data-ng-click="card.index = true">Show Index</a>
-            <a class="button button-mini button-primary button-not-animated" href="" data-ng-if="card.index" data-ng-click="card.index = false">Hide Index</a>
+            <p class="balloon-wrapper">
+                <span class="balloon">{{card.$index}}</span>
+            </p>
         </div>
-    </div>
+
+        <div class="photo-wrapper">
+            <img src="" data-ng-src="{{card.src}}" class="animation-fade" data-imageloaded data-loadedclass="animation-faded">
+        </div>
+
+
+        <div class="photo-description">
+            <h3>{{card.name}}</h3>
+            <p>Nice photo, eh.</p>
+        </div>
+    </a>
 </div>
