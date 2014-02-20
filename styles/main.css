@@ -67,7 +67,7 @@ img {
 }
 
 .balloon-wrapper {
-    padding-top:40px;
+    padding-top:30px;
     opacity:1;
     text-align:center;
 }
@@ -94,14 +94,6 @@ img {
     -moz-transition: opacity .4s linear 0s;
     -o-transition: opacity .4s linear 0s;
     transition: opacity .4s linear 0s;
-}
-
-.button.button-not-animated {
-    -webkit-transition:none;
-    -moz-transition:none;
-    -o-transition:none;
-    transition:none;
-    opacity:1;
 }
 
 .button:hover {
@@ -179,17 +171,11 @@ img {
     height:100%;
     text-align:center;
     width:100%;
+    z-index:99;
 }
 
 .photo .photo-index p:first-child {
     margin-top:10px;
-}
-
-.photo .button-bar {
-    position:absolute;
-    bottom:15px;
-    width:100%;
-    z-index:1;
 }
 
 .photo .photo-wrapper {
