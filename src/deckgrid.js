@@ -156,6 +156,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                     self.$$scope.columns[column] = [];
                 }
 
+                card.$index = index;
                 self.$$scope.columns[column].push(card);
             });
         };
