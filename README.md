@@ -39,7 +39,7 @@ Okay, we assume that you have a collection of photos and you want to display the
 
     ```html
     <div deckgrid source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
-    ``
+    ```
 
 * No template attribute: if you omit a template attribute (`cardTemplate` and `cardTemplateString`), the inner HTML of the directive will be used as the template, like in:
 
