@@ -149,6 +149,7 @@ img {
 
 .deckgrid[deckgrid]::before {
     content: '5 .column.size-1-5';
+    font-size: 0;
     visibility:hidden;
 }
 
