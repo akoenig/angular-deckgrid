@@ -94,7 +94,7 @@ The grid items will be distributed by your configured CSS selectors. An example:
     .deckgrid[deckgrid]::before {
         /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
-        display:none;
+        visibility: hidden;
     }
 
     .deckgrid .column {
