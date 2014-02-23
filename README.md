@@ -94,6 +94,7 @@ The grid items will be distributed by your configured CSS selectors. An example:
     .deckgrid[deckgrid]::before {
         /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
+	    font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
         visibility: hidden;
     }
 
@@ -135,7 +136,8 @@ A click on this button would execute the `doSomething()` function in your scope.
 
 Do you use the `angular-deckgrid` and would like to be featured here? Just send me an [email](mailto:andre.koenig@posteo.de) and I will add you and your application to this list.
 
-- [raindrop.io](http://raindrop.io/): Smart bookmarks - A beautiful way to remember the most important
+- [raindrop.io](http://raindrop.io/): "Smart bookmarks - A beautiful way to remember the most important"
+- [infowrap.com](https://www.infowrap.com/): "An infowrap is engineered to hold everything people need together on a single page and keep them up to date."
 
 ## Changelog
 
