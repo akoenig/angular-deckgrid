@@ -14,8 +14,9 @@
 angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
     'Deckgrid',
+    '$templateCache',
 
-    function initialize (Deckgrid) {
+    function initialize (Deckgrid, $templateCache) {
 
         'use strict';
 
@@ -39,7 +40,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be created in the linking function.
             //
             this.$$deckgrid = null;
-
+            this.transclude = true;
             this.link = this.$$link.bind(this);
         }
 
@@ -60,11 +61,36 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          * The deckgrid link method. Will instantiate the deckgrid.
          *
          */
-        Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
+        Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            scope.cardTemplate = attrs.cardtemplate;
+            if (attrs.cardtemplate === undefined) {
+                if (attrs.cardtemplatestring === undefined) {
+                    // use the provided inner html as template
+                    transclude(scope, function(innerHtml) {
+                        var extractedInnerHtml = [];
+                        for (var i = 0; i < innerHtml.length; i++) {
+                            var outerHTML = innerHtml[i].outerHTML;
+                            if (outerHTML !== undefined) {
+                                extractedInnerHtml.push(outerHTML);
+                            }
+                        }
+                        $templateCache.put('innerHtmlTemplate', extractedInnerHtml.join());
+                    });
+                } else {
+                    // use the provided template string
+                    //
+                    // note: the attr is accessed via the elem object, as the attrs content
+                    // is already compiled and thus lacks the {{...}} expressions
+                    $templateCache.put('innerHtmlTemplate', elem.attr('cardtemplatestring'));
+                }
 
+                scope.cardTemplate = 'innerHtmlTemplate';
+            } else {
+                // use the provided template file
+                scope.cardTemplate = attrs.cardtemplate;
+            }
+            
             scope.mother = scope.$parent;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);

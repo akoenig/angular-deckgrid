@@ -34,6 +34,27 @@ Okay, we assume that you have a collection of photos and you want to display the
 * `source`: The collection of objects that should be passed into your _deckgrid_ (by reference. Object change will be reflected in the grid).
 * `cardTemplate`: The URL to the template which represents one single card in the _deckgrid_.
 
+### Alternative ways to provide the template
+* `cardTemplateString` attribute: You can provide this attribute *instead* of the `cardTemplate` attribute to use the attribute value directly as the template. Example:
+
+    ```html
+    <div deckgrid source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
+    ```
+
+* No template attribute: if you omit a template attribute (`cardTemplate` and `cardTemplateString`), the inner HTML of the directive will be used as the template, like in:
+
+    ```html
+    <div deckgrid source="photos">
+        <div class="a-card">
+            <h1>{{card.title}}</h1>
+
+            <img src="" data-ng-src="{{card.src}}">
+        </div>
+    </div>
+    ```
+
+_Note: if you use one of these alternative ways to provide the card template, you don't have to use an external template file. However, using such a file is recommended, esp. for more complex templates._
+
 ### A complete example: Photogrid
 
 Okay, you have your controller ready and your template is fine so far. The only thing what is missing is a flexible grid. Let's start!
