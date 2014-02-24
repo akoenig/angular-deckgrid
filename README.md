@@ -141,6 +141,10 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
+### Version 0.4.0 (20140224)
+
+- [Feature] Functionality for passing inline templates.
+
 ### Version 0.3.0 (20140220)
 
 - [Feature] It is now possible to access the index of a card from within the card's template. This is accessible via the $index property of the card reference like {{card.$index}}.
@@ -171,6 +175,7 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Credits
 
+* All the [people](https://github.com/akoenig/angular-deckgrid/blob/master/CONTRIBUTORS.md) who made outstanding contributions to the `angular-deckgrid` so far.
 * [AngularJS](http://angularjs.org) Needless to say. You know the beast. One of the best frontend frameworks in the world.
 * [Rolando Murillo](http://rolandomurillo.com/) and [Giorgio Leveroni](https://github.com/ppold), the guys behind [salvattore](http://salvattore.com/) who inspired me to implement a similar solution for the AngularJS world.
 

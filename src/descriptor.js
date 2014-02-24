@@ -67,15 +67,21 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             if (attrs.cardtemplate === undefined) {
                 if (attrs.cardtemplatestring === undefined) {
                     // use the provided inner html as template
-                    transclude(scope, function(innerHtml) {
-                        var extractedInnerHtml = [];
-                        for (var i = 0; i < innerHtml.length; i++) {
-                            var outerHTML = innerHtml[i].outerHTML;
+                    transclude(scope, function onTransclude (innerHTML) {
+                        var extractedInnerHTML = [],
+                            i = 0,
+                            len = innerHTML.length,
+                            outerHTML;
+
+                        for (i; i < len; i = i + 1) {
+                            outerHTML = innerHTML[i].outerHTML;
+
                             if (outerHTML !== undefined) {
-                                extractedInnerHtml.push(outerHTML);
+                                extractedInnerHTML.push(outerHTML);
                             }
                         }
-                        $templateCache.put('innerHtmlTemplate', extractedInnerHtml.join());
+
+                        $templateCache.put('innerHtmlTemplate', extractedInnerHTML.join());
                     });
                 } else {
                     // use the provided template string
@@ -90,7 +96,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                 // use the provided template file
                 scope.cardTemplate = attrs.cardtemplate;
             }
-            
+
             scope.mother = scope.$parent;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);

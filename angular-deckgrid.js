@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.3.1-dev) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.4.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -41,8 +41,9 @@ angular.module('akoenig.deckgrid').directive('deckgrid', [
 angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
     'Deckgrid',
+    '$templateCache',
 
-    function initialize (Deckgrid) {
+    function initialize (Deckgrid, $templateCache) {
 
         'use strict';
 
@@ -66,7 +67,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be created in the linking function.
             //
             this.$$deckgrid = null;
-
+            this.transclude = true;
             this.link = this.$$link.bind(this);
         }
 
@@ -87,10 +88,41 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          * The deckgrid link method. Will instantiate the deckgrid.
          *
          */
-        Descriptor.prototype.$$link = function $$link (scope, elem, attrs) {
+        Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            scope.cardTemplate = attrs.cardtemplate;
+            if (attrs.cardtemplate === undefined) {
+                if (attrs.cardtemplatestring === undefined) {
+                    // use the provided inner html as template
+                    transclude(scope, function onTransclude (innerHTML) {
+                        var extractedInnerHTML = [],
+                            i = 0,
+                            len = innerHTML.length,
+                            outerHTML;
+
+                        for (i; i < len; i = i + 1) {
+                            outerHTML = innerHTML[i].outerHTML;
+
+                            if (outerHTML !== undefined) {
+                                extractedInnerHTML.push(outerHTML);
+                            }
+                        }
+
+                        $templateCache.put('innerHtmlTemplate', extractedInnerHTML.join());
+                    });
+                } else {
+                    // use the provided template string
+                    //
+                    // note: the attr is accessed via the elem object, as the attrs content
+                    // is already compiled and thus lacks the {{...}} expressions
+                    $templateCache.put('innerHtmlTemplate', elem.attr('cardtemplatestring'));
+                }
+
+                scope.cardTemplate = 'innerHtmlTemplate';
+            } else {
+                // use the provided template file
+                scope.cardTemplate = attrs.cardtemplate;
+            }
 
             scope.mother = scope.$parent;
 
