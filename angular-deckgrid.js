@@ -60,7 +60,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             '</div>';
 
             this.scope = {
-                'model': '=source'
+                'model': '=source',
+                'itemIdentifierFn': '='
             };
 
             //
@@ -185,7 +186,16 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             //
             // Register model change.
             //
-            watcher = this.$$scope.$watch('model', this.$$onModelChange.bind(this), true);
+            var watchExpression = !scope.itemIdentifierFn ?
+                'model' :
+                function() {
+                    var result = '';
+                    for (var i = 0; i < scope.model.length; i++) {
+                        result += scope.itemIdentifierFn(scope.model[i]);
+                    }
+                    return result;
+                };
+            watcher = this.$$scope.$watch(watchExpression, this.$$onModelChange.bind(this), true);
             this.$$watchers.push(watcher);
 
             //
@@ -368,8 +378,19 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
             var self = this;
 
-            if (oldModel.length !== newModel.length) {
-                self.$$createColumns();
+            if (isString(newModel) || isArray(newModel)) {
+                if (oldModel.length !== newModel.length) {
+                    self.$$createColumns();
+                } else {
+                    for (var i = newModel.length - 1; i >= 0; i--) {
+                        if (oldModel[i] !== newModel[i]) {
+                            self.$$createColumns();
+                            break;
+                        }
+                    }
+                }
+            } else {
+                $log.error('DeckGrid watch expression must return an array or string.');
             }
         };
 
@@ -385,6 +406,20 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 this.$$watchers[i]();
             }
         };
+
+        function isString(value) {
+            return typeof value === 'string' ||
+                value && typeof value === 'object' && value.toString() === '[object String]' || false;
+        }
+
+        function isArray(obj) {
+            if (Array.isArray) {
+                return Array.isArray(obj);
+            }
+
+            return obj && typeof obj === 'object' && typeof obj.length === 'number' &&
+                obj.toString() === '[object Array]' || false;
+        }
 
         return {
             create : function create (scope, element) {

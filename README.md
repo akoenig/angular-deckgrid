@@ -87,6 +87,35 @@ This index reflects the index of the corresponding object in the source collecti
 
 That's all! Ehm, no. If you run your application now, you will notice that there is only one column. What is missing? Well, we have to define the configuration for the visual representation. And what is the best place for something like this? Yes, for sure! Your CSS file(s).
 
+### Providing a custom function to build the watch listener
+
+If you are expecting a lot of items or have complex objects you may want to provide a custom function to build a watch expression instead of asking angular to deep compare each object. The function should return a string and will be called for each item in `source`. The result will be a concatenated string from the result of each function.
+
+Example:
+
+```html
+<div>
+    <ul deckgrid card-template="CardView" item-identifier-fn="getItemId" source="items">
+    ...
+    </ul>
+</div>
+```
+
+```javascript
+$scope.items = [
+    { id: 1, name: "Photo 1", properties: {...} },
+    { id: 2, name: "Photo 2", properties: {...} },
+    { id: 3, name: "Photo 3", properties: {...} },
+    { id: 4, name: "Photo 4", properties: {...} },
+];
+
+$scope.getItemId = function (item) {
+    return item.id + "|";
+}
+```
+
+The value used for the watch expression will be: `'1|2|3|4|'`.
+
 ## The grid configuration
 
 The grid items will be distributed by your configured CSS selectors. An example:
