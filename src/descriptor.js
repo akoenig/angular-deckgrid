@@ -33,7 +33,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             '</div>';
 
             this.scope = {
-                'model': '=source'
+                'model': '=source',
+                'itemIdentifierFn': '='
             };
 
             //
