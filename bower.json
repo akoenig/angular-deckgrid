@@ -4,6 +4,10 @@
   "author": "André König (andre.koenig@posteo.de)",
   "description": "A lightweight masonry-like grid for AngularJS.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:akoenig/angular-deckgrid.git"
+  },
   "main": "./angular-deckgrid.js",
   "ignore": [
     "**/.*",
