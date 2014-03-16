@@ -8,3 +8,5 @@ _(ordered by first contribution)_
 - [Patrick Stapleton](http://github.com/gdi2290)
 - [johnwest80](http://github.com/johnwest80)
 - [Sebastian Oergel](http://github.com/sebastianoe)
+- [Benchekroune](https://github.com/overben)
+- [Elad Ossadon](https://github.com/elado)

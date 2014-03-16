@@ -94,7 +94,7 @@ The grid items will be distributed by your configured CSS selectors. An example:
     .deckgrid[deckgrid]::before {
         /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
-	    font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
+        font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
         visibility: hidden;
     }
 
@@ -140,6 +140,11 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 - [infowrap.com](https://www.infowrap.com/): "An infowrap is engineered to hold everything people need together on a single page and keep them up to date."
 
 ## Changelog
+
+### Version 0.4.1 (Future)
+
+- [Bugfix] If model is not ready by rendering, there's an error #31 
+- [Feature] Multiple grids on page with cardTemplateString use the last template available #33 
 
 ### Version 0.4.0 (20140224)
 

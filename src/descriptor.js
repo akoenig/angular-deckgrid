@@ -40,10 +40,15 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be created in the linking function.
             //
             this.$$deckgrid = null;
+
             this.transclude = true;
             this.link = this.$$link.bind(this);
-            
-            this.templateKeyIndex = 0;
+
+            //
+            // Will be incremented if using inline templates.
+            //
+            this.$$templateKeyIndex = 0;
+
         }
 
         /**
@@ -64,9 +69,9 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
+            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex);
+
             scope.$on('$destroy', this.$$destroy.bind(this));
-            
-            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.templateKeyIndex);
 
             if (attrs.cardtemplate === undefined) {
                 if (attrs.cardtemplatestring === undefined) {
