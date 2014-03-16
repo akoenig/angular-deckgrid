@@ -229,6 +229,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
             var self = this;
 
+            newModel = newModel || [];
+            oldModel = oldModel || [];
+
             if (oldModel.length !== newModel.length) {
                 self.$$createColumns();
             }

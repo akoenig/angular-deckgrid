@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.4.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.4.1) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -367,6 +367,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          */
         Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
             var self = this;
+
+            newModel = newModel || [];
+            oldModel = oldModel || [];
 
             if (oldModel.length !== newModel.length) {
                 self.$$createColumns();
