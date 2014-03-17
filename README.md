@@ -141,7 +141,7 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
-### Version 0.4.1 (Future)
+### Version 0.4.1 (20140317)
 
 - [Bugfix] If model is not ready by rendering, there's an error [#31](https://github.com/akoenig/angular-deckgrid/issues/31)
 - [Feature] Multiple grids on page with cardTemplateString use the last template available [#33](https://github.com/akoenig/angular-deckgrid/issues/33)
