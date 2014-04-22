@@ -10,3 +10,4 @@ _(ordered by first contribution)_
 - [Sebastian Oergel](http://github.com/sebastianoe)
 - [Benchekroune](https://github.com/overben)
 - [Elad Ossadon](https://github.com/elado)
+- [Andrei Malyshev](https://github.com/k41n)

@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.4.1) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.4.2) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -174,7 +174,8 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          */
         function Deckgrid (scope, element) {
             var self = this,
-                watcher;
+                watcher,
+                mql;
 
             this.$$elem = element;
             this.$$watchers = [];
@@ -209,6 +210,10 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
                 self.$$watchers.push(onDestroy);
             });
+            
+            mql = $window.matchMedia('(orientation: portrait)');
+            mql.addListener(self.$$onMediaQueryChange.bind(self));
+
         }
 
         /**

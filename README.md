@@ -141,9 +141,13 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
-### Version 0.4.2 (Future)
+### Version 0.4.3 (Future)
 
 - Open: [Bugfix] We need a solution to prevent the model binding for `innerHTML` templates (e.g. `ngIf` not working) [#44](https://github.com/akoenig/angular-deckgrid/issues/44)
+
+### Version 0.4.2 (20140422)
+
+- [Bugfix] Problems with device orientation [#46](https://github.com/akoenig/angular-deckgrid/issues/46)
 
 ### Version 0.4.1 (20140317)
 
