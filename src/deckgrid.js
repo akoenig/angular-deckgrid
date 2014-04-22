@@ -54,11 +54,13 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             // Register media query change events.
             //
             angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
+                var handler = self.$$onMediaQueryChange.bind(self);
+
                 function onDestroy () {
-                    rule.removeListener(self.$$onMediaQueryChange.bind(self));
+                    rule.removeListener(handler);
                 }
 
-                rule.addListener(self.$$onMediaQueryChange.bind(self));
+                rule.addListener(handler);
 
                 self.$$watchers.push(onDestroy);
             });
