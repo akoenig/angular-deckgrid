@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.4.2) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.4.3) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -202,11 +202,13 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             // Register media query change events.
             //
             angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
+                var handler = self.$$onMediaQueryChange.bind(self);
+
                 function onDestroy () {
-                    rule.removeListener(self.$$onMediaQueryChange.bind(self));
+                    rule.removeListener(handler);
                 }
 
-                rule.addListener(self.$$onMediaQueryChange.bind(self));
+                rule.addListener(handler);
 
                 self.$$watchers.push(onDestroy);
             });
