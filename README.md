@@ -38,13 +38,13 @@ Okay, we assume that you have a collection of photos and you want to display the
 * `cardTemplateString` attribute: You can provide this attribute *instead* of the `cardTemplate` attribute to use the attribute value directly as the template. Example:
 
     ```html
-    <div deckgrid source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
+    <div deckgrid class="deckgrid" source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
     ```
 
 * No template attribute: if you omit a template attribute (`cardTemplate` and `cardTemplateString`), the inner HTML of the directive will be used as the template, like in:
 
     ```html
-    <div deckgrid source="photos">
+    <div deckgrid class="deckgrid" source="photos">
         <div class="a-card">
             <h1>{{card.title}}</h1>
 
