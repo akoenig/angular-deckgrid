@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.4.3) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.4.4) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -96,7 +96,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
-            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex);
+            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex) + '.html';
 
             scope.$on('$destroy', this.$$destroy.bind(this));
 
