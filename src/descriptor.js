@@ -69,7 +69,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
-            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex);
+            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex) + '.html';
 
             scope.$on('$destroy', this.$$destroy.bind(this));
 
