@@ -203,4 +203,4 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Author
 
-Copyright 2013, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)
+Copyright 2013 - 2014, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)
