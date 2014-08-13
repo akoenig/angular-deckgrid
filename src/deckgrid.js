@@ -47,7 +47,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             //
             // Register model change.
             //
-            watcher = this.$$scope.$watch('model', this.$$onModelChange.bind(this), true);
+            watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
             this.$$watchers.push(watcher);
 
             //
