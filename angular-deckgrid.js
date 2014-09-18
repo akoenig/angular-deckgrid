@@ -181,7 +181,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             this.$$watchers = [];
 
             this.$$scope = scope;
-            this.$$scope.columns = [];
+//            this.$$scope.columns = [];
 
             //
             // The layout configuration will be parsed from
@@ -295,25 +295,25 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          */
         Deckgrid.prototype.$$createColumns = function $$createColumns () {
-            var self = this;
-
             if (!this.$$scope.layout) {
                 return $log.error('angular-deckgrid: No CSS configuration found (see ' +
                                    'https://github.com/akoenig/angular-deckgrid#the-grid-configuration)');
             }
 
-            this.$$scope.columns = [];
+            var columns = [], columnNum = this.$$scope.layout.columns;
 
             angular.forEach(this.$$scope.model, function onIteration (card, index) {
-                var column = (index % self.$$scope.layout.columns) | 0;
+                var column = (index % columnNum) | 0;
 
-                if (!self.$$scope.columns[column]) {
-                    self.$$scope.columns[column] = [];
+                if (!columns[column]) {
+	                columns[column] = [];
                 }
 
                 card.$index = index;
-                self.$$scope.columns[column].push(card);
+	            columns[column].push(card);
             });
+
+	        this.$$scope.columns = columns;
         };
 
         /**
