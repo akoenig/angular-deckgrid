@@ -13,254 +13,281 @@
 
 angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
-    '$window',
-    '$log',
+	'$window',
+	'$log',
 
-    function initialize ($window, $log) {
+	function initialize($window, $log) {
 
-        'use strict';
+		'use strict';
 
-        /**
-         * The deckgrid directive.
-         *
-         */
-        function Deckgrid (scope, element) {
-            var self = this,
-                watcher,
-                mql;
+		/**
+		 * The deckgrid directive.
+		 *
+		 */
+		function Deckgrid(scope, element) {
+			var self = this,
+				watcher,
+				mql;
 
-            this.$$elem = element;
-            this.$$watchers = [];
+			this.$$elem = element;
+			this.$$watchers = [];
 
-            this.$$scope = scope;
-            this.$$scope.columns = [];
+			this.$$scope = scope;
+			this.$$scope.columns = [];
 
-            //
-            // The layout configuration will be parsed from
-            // the pseudo "before element." There you have to save all
-            // the column configurations.
-            //
-            this.$$scope.layout = this.$$getLayout();
+			//
+			// The layout configuration will be parsed from
+			// the pseudo "before element." There you have to save all
+			// the column configurations.
+			//
+			this.$$scope.layout = this.$$getLayout();
 
-            this.$$createColumns();
+			this.$$createColumns();
 
-            //
-            // Register model change.
-            //
-            watcher = this.$$scope.$watch('model', this.$$onModelChange.bind(this), true);
-            this.$$watchers.push(watcher);
+			//
+			// Register model change.
+			//
+			watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
+			this.$$watchers.push(watcher);
 
-            //
-            // Register media query change events.
-            //
-            angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
-                var handler = self.$$onMediaQueryChange.bind(self);
+			//
+			// Register media query change events.
+			//
+			angular.forEach(self.$$getMediaQueries(), function onIteration(rule) {
+				var handler = self.$$onMediaQueryChange.bind(self);
 
-                function onDestroy () {
-                    rule.removeListener(handler);
-                }
+				function onDestroy() {
+					rule.removeListener(handler);
+				}
 
-                rule.addListener(handler);
+				rule.addListener(handler);
 
-                self.$$watchers.push(onDestroy);
-            });
-            
-            mql = $window.matchMedia('(orientation: portrait)');
-            mql.addListener(self.$$onMediaQueryChange.bind(self));
+				self.$$watchers.push(onDestroy);
+			});
 
-        }
+			mql = $window.matchMedia('(orientation: portrait)');
+			mql.addListener(self.$$onMediaQueryChange.bind(self));
 
-        /**
-         * @private
-         *
-         * Extracts the media queries out of the stylesheets.
-         *
-         * This method will fetch the media queries out of the stylesheets that are
-         * responsible for styling the angular-deckgrid.
-         *
-         * @return {array} An array with all respective styles.
-         *
-         */
-        Deckgrid.prototype.$$getMediaQueries = function $$getMediaQueries () {
-            var stylesheets = [],
-                mediaQueries = [];
+		}
 
-            stylesheets = Array.prototype.concat.call(
-                Array.prototype.slice.call(document.querySelectorAll('style[type=\'text/css\']')),
-                Array.prototype.slice.call(document.querySelectorAll('link[rel=\'stylesheet\']'))
-            );
+		/**
+		 * @private
+		 *
+		 * Extracts the media queries out of the stylesheets.
+		 *
+		 * This method will fetch the media queries out of the stylesheets that are
+		 * responsible for styling the angular-deckgrid.
+		 *
+		 * @return {array} An array with all respective styles.
+		 *
+		 */
+		Deckgrid.prototype.$$getMediaQueries = function $$getMediaQueries() {
+			var stylesheets = [],
+				mediaQueries = [];
 
-            function extractRules (stylesheet) {
-                try {
-                    return (stylesheet.sheet.cssRules || []);
-                } catch (e) {
-                    return [];
-                }
-            }
+			stylesheets = Array.prototype.concat.call(
+				Array.prototype.slice.call(document.querySelectorAll('style[type=\'text/css\']')),
+				Array.prototype.slice.call(document.querySelectorAll('link[rel=\'stylesheet\']'))
+			);
 
-            function hasDeckgridStyles (rule) {
-                var regexe   = /\[(\w*-)?deckgrid\]::?before/g,
-                    i        = 0,
-                    selector = '';
+			function extractRules(stylesheet) {
+				try {
+					return (stylesheet.sheet.cssRules || []);
+				} catch (e) {
+					return [];
+				}
+			}
 
-                if (!rule.media || angular.isUndefined(rule.cssRules)) {
-                    return false;
-                }
+			function hasDeckgridStyles(rule) {
+				var regexe = /\[(\w*-)?deckgrid\]::?before/g,
+					i = 0,
+					selector = '';
 
-                i = rule.cssRules.length - 1;
+				if (!rule.media || angular.isUndefined(rule.cssRules)) {
+					return false;
+				}
 
-                for (i; i >= 0; i = i - 1) {
-                    selector = rule.cssRules[i].selectorText;
+				i = rule.cssRules.length - 1;
 
-                    if (angular.isDefined(selector) && selector.match(regexe)) {
-                        return true;
-                    }
-                }
+				for (i; i >= 0; i = i - 1) {
+					selector = rule.cssRules[i].selectorText;
 
-                return false;
-            }
+					if (angular.isDefined(selector) && selector.match(regexe)) {
+						return true;
+					}
+				}
 
-            angular.forEach(stylesheets, function onIteration (stylesheet) {
-                var rules = extractRules(stylesheet);
+				return false;
+			}
 
-                angular.forEach(rules, function inRuleIteration (rule) {
-                    if (hasDeckgridStyles(rule)) {
-                        mediaQueries.push($window.matchMedia(rule.media.mediaText));
-                    }
-                });
-            });
+			angular.forEach(stylesheets, function onIteration(stylesheet) {
+				var rules = extractRules(stylesheet);
 
-            return mediaQueries;
-        };
+				angular.forEach(rules, function inRuleIteration(rule) {
+					if (hasDeckgridStyles(rule)) {
+						mediaQueries.push($window.matchMedia(rule.media.mediaText));
+					}
+				});
+			});
 
-        /**
-         * @private
-         *
-         * Creates the column segmentation. With other words:
-         * This method creates the internal data structure from the
-         * passed "source" attribute. Every card within this "source"
-         * model will be passed into this internal column structure by
-         * reference. So if you modify the data within your controller
-         * this directive will reflect these changes immediately.
-         *
-         * NOTE that calling this method will trigger a complete template "redraw".
-         *
-         */
-        Deckgrid.prototype.$$createColumns = function $$createColumns () {
-            var self = this;
+			return mediaQueries;
+		};
 
-            if (!this.$$scope.layout) {
-                return $log.error('angular-deckgrid: No CSS configuration found (see ' +
-                                   'https://github.com/akoenig/angular-deckgrid#the-grid-configuration)');
-            }
+		Deckgrid.prototype.$$cachedParams = function $$cachedParams(column) {
+			if (!this.$$cache) {
+				this.$$cache = {};
+			}
+			if (this.$$cache.column === column) {
+				return this.$$cache;
+			}
+			this.$$cache = { column: column, modelLength: 0 };
+			return this.$$cache;
+		};
 
-            this.$$scope.columns = [];
+		/**
+		 * @private
+		 *
+		 * Creates the column segmentation. With other words:
+		 * This method creates the internal data structure from the
+		 * passed "source" attribute. Every card within this "source"
+		 * model will be passed into this internal column structure by
+		 * reference. So if you modify the data within your controller
+		 * this directive will reflect these changes immediately.
+		 *
+		 * NOTE that calling this method will trigger a complete template "redraw".
+		 *
+		 */
+		Deckgrid.prototype.$$createColumns = function $$createColumns() {
+			if (!this.$$scope.layout) {
+				return $log.error('angular-deckgrid: No CSS configuration found (see ' +
+					'https://github.com/akoenig/angular-deckgrid#the-grid-configuration)');
+			}
 
-            angular.forEach(this.$$scope.model, function onIteration (card, index) {
-                var column = (index % self.$$scope.layout.columns) | 0;
+			var cachedParams = this.$$cachedParams(this.$$scope.layout.columns);
+			if (cachedParams.modelLength === 0) {
+				// layout change, reset columns
+				this.$$scope.columns = [];
+			}
 
-                if (!self.$$scope.columns[column]) {
-                    self.$$scope.columns[column] = [];
-                }
+			var modelLength = 0;
+			if (this.$$scope.model) {
+				modelLength = this.$$scope.model.length;
+			}
+			for (var index = cachedParams.modelLength; index < modelLength; index++) {
+				var card = this.$$scope.model[index];
+				var column = (index % this.$$scope.layout.columns) | 0;
 
-                card.$index = index;
-                self.$$scope.columns[column].push(card);
-            });
-        };
+				if (!this.$$scope.columns[column]) {
+					this.$$scope.columns[column] = [];
+				}
+				card.$index = index;
+				this.$$scope.columns[column].push(card);
+			}
 
-        /**
-         * @private
-         *
-         * Parses the configuration out of the configured CSS styles.
-         *
-         * Example:
-         *
-         *     .deckgrid::before {
+			cachedParams.modelLength = modelLength;
+		};
+
+		/**
+		 * @private
+		 *
+		 * Parses the configuration out of the configured CSS styles.
+		 *
+		 * Example:
+		 *
+		 *     .deckgrid::before {
          *         content: '3 .column.size-1-3';
          *     }
-         *
-         * Will result in a three column grid where each column will have the
-         * classes: "column size-1-3".
-         *
-         * You are responsible for defining the respective styles within your CSS.
-         *
-         */
-        Deckgrid.prototype.$$getLayout = function $$getLayout () {
-            var content = $window.getComputedStyle(this.$$elem, ':before').content,
-                layout;
+		 *
+		 * Will result in a three column grid where each column will have the
+		 * classes: "column size-1-3".
+		 *
+		 * You are responsible for defining the respective styles within your CSS.
+		 *
+		 */
+		Deckgrid.prototype.$$getLayout = function $$getLayout() {
+			var content = $window.getComputedStyle(this.$$elem, ':before').content,
+				layout;
 
-            if (content) {
-                content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
-                content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
-                content = content.split(' ');
+			if (content) {
+				content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
+				content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
+				content = content.split(' ');
 
-                if (2 === content.length) {
-                    layout = {};
-                    layout.columns = (content[0] | 0);
-                    layout.classList = content[1].replace(/\./g, ' ').trim();
-                }
-            }
+				if (2 === content.length) {
+					layout = {};
+					layout.columns = (content[0] | 0);
+					layout.classList = content[1].replace(/\./g, ' ').trim();
+				}
+			}
 
-            return layout;
-        };
+			return layout;
+		};
 
-        /**
-         * @private
-         *
-         * Event that will be triggered if a CSS media query changed.
-         *
-         */
-        Deckgrid.prototype.$$onMediaQueryChange = function $$onMediaQueryChange () {
-            var self = this,
-                layout = this.$$getLayout();
+		/**
+		 * @private
+		 *
+		 * Event that will be triggered if a CSS media query changed.
+		 *
+		 */
+		Deckgrid.prototype.$$onMediaQueryChange = function $$onMediaQueryChange() {
+			var self = this,
+				layout = this.$$getLayout();
 
-            //
-            // Okay, the layout has changed.
-            // Creating a new column structure is not avoidable.
-            //
-            if (layout.columns !== this.$$scope.layout.columns) {
-                self.$$scope.layout = layout;
+			//
+			// Okay, the layout has changed.
+			// Creating a new column structure is not avoidable.
+			//
+			if (layout.columns !== this.$$scope.layout.columns) {
+				self.$$scope.layout = layout;
 
-                self.$$scope.$apply(function onApply () {
-                    self.$$createColumns();
-                });
-            }
-        };
+				self.$$scope.$apply(function onApply() {
+					self.$$createColumns();
+				});
+			}
+		};
 
-        /**
-         * @private
-         *
-         * Event that will be triggered when the source model has changed.
-         *
-         */
-        Deckgrid.prototype.$$onModelChange = function $$onModelChange (newModel, oldModel) {
-            var self = this;
+		/**
+		 * @private
+		 *
+		 * Event that will be triggered when the source model has changed.
+		 *
+		 */
+		Deckgrid.prototype.$$onModelChange = function $$onModelChange(newModel, oldModel) {
+			var self = this;
 
-            newModel = newModel || [];
-            oldModel = oldModel || [];
+			newModel = newModel || [];
+			oldModel = oldModel || [];
 
-            if (oldModel.length !== newModel.length) {
-                self.$$createColumns();
-            }
-        };
+			if (oldModel.length !== newModel.length) {
+				self.$$createColumns();
+			} else {
+				var i = newModel.length - 1;
+				for (i; i >= 0; i = i - 1) {
+					if (oldModel[i] !== newModel[i]) {
+						self.$$createColumns();
+						break;
+					}
+				}
+			}
+		};
 
-        /**
-         * Destroys the directive. Takes care of cleaning all
-         * watchers and event handlers.
-         *
-         */
-        Deckgrid.prototype.destroy = function destroy () {
-            var i = this.$$watchers.length - 1;
+		/**
+		 * Destroys the directive. Takes care of cleaning all
+		 * watchers and event handlers.
+		 *
+		 */
+		Deckgrid.prototype.destroy = function destroy() {
+			var i = this.$$watchers.length - 1;
 
-            for (i; i >= 0; i = i - 1) {
-                this.$$watchers[i]();
-            }
-        };
+			for (i; i >= 0; i = i - 1) {
+				this.$$watchers[i]();
+			}
+		};
 
-        return {
-            create : function create (scope, element) {
-                return new Deckgrid(scope, element);
-            }
-        };
-    }
+		return {
+			create: function create(scope, element) {
+				return new Deckgrid(scope, element);
+			}
+		};
+	}
 ]);
