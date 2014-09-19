@@ -47,7 +47,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 			//
 			// Register model change.
 			//
-			watcher = this.$$scope.$watch('model', this.$$onModelChange.bind(this), true);
+			watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
 			this.$$watchers.push(watcher);
 
 			//
@@ -133,6 +133,17 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 			return mediaQueries;
 		};
 
+		Deckgrid.prototype.$$cachedParams = function $$cachedParams(column) {
+			if (!this.$$cache) {
+				this.$$cache = {};
+			}
+			if (this.$$cache.column === column) {
+				return this.$$cache;
+			}
+			this.$$cache = { column: column, modelLength: 0 };
+			return this.$$cache;
+		};
+
 		/**
 		 * @private
 		 *
@@ -152,20 +163,28 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 					'https://github.com/akoenig/angular-deckgrid#the-grid-configuration)');
 			}
 
-			var columns = [], columnNum = this.$$scope.layout.columns;
+			var cachedParams = this.$$cachedParams(this.$$scope.layout.columns);
+			if (cachedParams.modelLength === 0) {
+				// layout change, reset columns
+				this.$$scope.columns = [];
+			}
 
-			angular.forEach(this.$$scope.model, function onIteration(card, index) {
-				var column = (index % columnNum) | 0;
+			var modelLength = 0;
+			if (this.$$scope.model) {
+				modelLength = this.$$scope.model.length;
+			}
+			for (var index = cachedParams.modelLength; index < modelLength; index++) {
+				var card = this.$$scope.model[index];
+				var column = (index % this.$$scope.layout.columns) | 0;
 
-				if (!columns[column]) {
-					columns[column] = [];
+				if (!this.$$scope.columns[column]) {
+					this.$$scope.columns[column] = [];
 				}
-
 				card.$index = index;
-				columns[column].push(card);
-			});
+				this.$$scope.columns[column].push(card);
+			}
 
-			this.$$scope.columns = columns;
+			cachedParams.modelLength = modelLength;
 		};
 
 		/**
