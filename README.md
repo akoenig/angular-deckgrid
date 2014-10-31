@@ -148,7 +148,7 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 ### Version 0.5.0 (20141031)
 
 - Upgraded AngularJS dependency in `bower.json` (v1.3.0).
-- Changed the model comparison (see #48).
+- Changed the collection comparison which triggers the repaint (see #48).
 - Switched from `$watch` to `$watchCollection` to gain a bit more performance (see #56).
 - Ported the ordinary `undefined` checks to AngularJS standard functions.
 
