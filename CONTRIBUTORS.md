@@ -11,3 +11,6 @@ _(ordered by first contribution)_
 - [Benchekroune](https://github.com/overben)
 - [Elad Ossadon](https://github.com/elado)
 - [Andrei Malyshev](https://github.com/k41n)
+- [Michel Boudreau](https://github.com/mboudreau)
+- [Sam Milledge](https://github.com/smilledge)
+- [Phuong Nguyen](https://github.com/phuongnd08)
