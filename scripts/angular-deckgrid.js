@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.4.4) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.5.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
@@ -100,8 +100,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            if (attrs.cardtemplate === undefined) {
-                if (attrs.cardtemplatestring === undefined) {
+            if (angular.isUndefined(attrs.cardtemplate)) {
+                if (angular.isUndefined(attrs.cardtemplatestring)) {
                     // use the provided inner html as template
                     transclude(scope, function onTransclude (innerHTML) {
                         var extractedInnerHTML = [],
@@ -112,7 +112,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                         for (i; i < len; i = i + 1) {
                             outerHTML = innerHTML[i].outerHTML;
 
-                            if (outerHTML !== undefined) {
+                            if (angular.isDefined(outerHTML)) {
                                 extractedInnerHTML.push(outerHTML);
                             }
                         }
@@ -195,7 +195,8 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             //
             // Register model change.
             //
-            watcher = this.$$scope.$watch('model', this.$$onModelChange.bind(this), true);
+            watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
+
             this.$$watchers.push(watcher);
 
             //
@@ -387,7 +388,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             newModel = newModel || [];
             oldModel = oldModel || [];
 
-            if (oldModel.length !== newModel.length) {
+            if (!angular.equals(oldModel, newModel)) {
                 self.$$createColumns();
             }
         };
