@@ -239,7 +239,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             newModel = newModel || [];
             oldModel = oldModel || [];
 
-            if (oldModel.length !== newModel.length) {
+            if (!angular.equals(oldModel, newModel)) {
                 self.$$createColumns();
             }
         };
