@@ -73,8 +73,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
             scope.$on('$destroy', this.$$destroy.bind(this));
 
-            if (angular.isUndefined(attrs.cardtemplate === undefined)) {
-                if (angular.isUndefined(attrs.cardtemplatestring === undefined)) {
+            if (angular.isUndefined(attrs.cardtemplate)) {
+                if (angular.isUndefined(attrs.cardtemplatestring)) {
                     // use the provided inner html as template
                     transclude(scope, function onTransclude (innerHTML) {
                         var extractedInnerHTML = [],
