@@ -141,9 +141,13 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
-### Version 0.4.5 (Future)
+### Version 0.5.0 (Future)
 
 - Open: [Bugfix] We need a solution to prevent the model binding for `innerHTML` templates (e.g. `ngIf` not working) [#44](https://github.com/akoenig/angular-deckgrid/issues/44)
+
+### Version 0.4.5 (20141031)
+
+- Upgraded AngularJS dependency in `bower.json` (v1.3.0)
 
 ### Version 0.4.4 (20140514)
 
