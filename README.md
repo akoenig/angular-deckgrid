@@ -138,6 +138,7 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 - [raindrop.io](http://raindrop.io/): "Smart bookmarks - A beautiful way to remember the most important"
 - [infowrap.com](https://www.infowrap.com/): "An infowrap is engineered to hold everything people need together on a single page and keep them up to date."
+- [theonegenerator.com](http://www.theonegenerator.com/): "This webapp is designed to any user in need of randomly generated data for testing cases, gaming and lottery spins."
 
 ## Changelog
 
