@@ -340,6 +340,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 var column = (index % self.$$scope.layout.columns) | 0;
                 lastUsedColumn=column;
                 card.$index = index;
+                if (!self.$$scope.columns[column]) {
+                    self.$$scope.columns[column] = [];
+                }
                 self.$$scope.columns[column].push(card);
             });
             self.$$scope.lastUsedColumn=lastUsedColumn;
