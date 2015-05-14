@@ -363,16 +363,18 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             var self = this,
                 layout = this.$$getLayout();
 
-            //
-            // Okay, the layout has changed.
-            // Creating a new column structure is not avoidable.
-            //
-            if (layout.columns !== this.$$scope.layout.columns) {
-                self.$$scope.layout = layout;
-
-                self.$$scope.$apply(function onApply () {
-                    self.$$createColumns();
-                });
+            if (layout !== undefined) {
+                //
+                // Okay, the layout has changed.
+                // Creating a new column structure is not avoidable.
+                //
+                if (layout.columns !== this.$$scope.layout.columns) {
+                    self.$$scope.layout = layout;
+    
+                    self.$$scope.$apply(function onApply () {
+                        self.$$createColumns();
+                    });
+                }
             }
         };
 
