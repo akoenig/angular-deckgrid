@@ -110,13 +110,13 @@ The grid items will be distributed by your configured CSS selectors. An example:
 
 In order to support different grid representations for different screen sizes, you can define the respective media queries like:
 
+    .deckgrid .column-1-1 {
+        width: 100%;
+    }
+
     @media screen and (max-width: 480px){
         .deckgrid[deckgrid]::before {
             content: '1 .column.column-1-1';
-        }
-
-        .deckgrid .column-1-1 {
-            width: 100%;
         }
     }
     ...
