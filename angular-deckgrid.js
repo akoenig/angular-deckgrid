@@ -60,7 +60,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             '</div>';
 
             this.scope = {
-                'model': '=source'
+                'model': '=source',
+                'filter': '=filter'
             };
 
             //
@@ -163,8 +164,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
     '$window',
     '$log',
+    '$filter',
 
-    function initialize ($window, $log) {
+    function initialize ($window, $log, $filter) {
 
         'use strict';
 
@@ -174,7 +176,8 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          */
         function Deckgrid (scope, element) {
             var self = this,
-                watcher,
+                watcher, 
+                filterWatcher,
                 mql;
 
             this.$$elem = element;
@@ -196,8 +199,10 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             // Register model change.
             //
             watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
-
             this.$$watchers.push(watcher);
+
+            filterWatcher = this.$$scope.$watchCollection('filter', this.$$onModelChange.bind(this));
+            this.$$watchers.push(filterWatcher);
 
             //
             // Register media query change events.
@@ -304,8 +309,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             }
 
             this.$$scope.columns = [];
-
-            angular.forEach(this.$$scope.model, function onIteration (card, index) {
+            angular.forEach($filter('filter')(this.$$scope.model, this.$$scope.filter), function onIteration (card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
