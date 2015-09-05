@@ -19,5 +19,6 @@
   },
   "scripts": {
     "test": "grunt test"
-  }
+  },
+  "main" : "angular-deckgrid.js"
 }
