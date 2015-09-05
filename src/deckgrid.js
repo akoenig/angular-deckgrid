@@ -27,7 +27,8 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         function Deckgrid (scope, element) {
             var self = this,
                 watcher,
-                mql;
+                mql,
+                handler;
 
             this.$$elem = element;
             this.$$watchers = [];
@@ -54,8 +55,10 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             //
             // Register media query change events.
             //
+            handler = self.$$onMediaQueryChange.bind(self);
+
             angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
-                var handler = self.$$onMediaQueryChange.bind(self);
+
 
                 function onDestroy () {
                     rule.removeListener(handler);
@@ -65,9 +68,16 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
                 self.$$watchers.push(onDestroy);
             });
-            
+
             mql = $window.matchMedia('(orientation: portrait)');
-            mql.addListener(self.$$onMediaQueryChange.bind(self));
+
+            function onDestroy () {
+                mql.removeListener(handler);
+            }
+
+            mql.addListener(handler);
+
+            self.$$watchers.push(onDestroy);
 
         }
 
