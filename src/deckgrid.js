@@ -65,7 +65,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
                 self.$$watchers.push(onDestroy);
             });
-            
+
             mql = $window.matchMedia('(orientation: portrait)');
             mql.addListener(self.$$onMediaQueryChange.bind(self));
 
@@ -100,7 +100,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             }
 
             function hasDeckgridStyles (rule) {
-                var regexe   = /\[(\w*-)?deckgrid\]::?before/g,
+                // IE 9 treats .lia-deckgrid[deckgrid]::before as [deckgrid].lia-deckgrid::before
+                // short notation of  \[(\w*-)?deckgrid\]::?before|\[(\w*-)?deckgrid\][\.#][\w-]*::?before
+                var regexe = /(\[(\w*-)?deckgrid\]|\[(\w*-)?deckgrid\][\.#][\w-]*)::?before/g,
                     i        = 0,
                     selector = '';
 
