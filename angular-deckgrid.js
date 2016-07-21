@@ -56,12 +56,14 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                                '<div data-ng-repeat="card in column" data-ng-include="cardTemplate"></div>' +
+                                '<div data-ng-repeat="card in column | orderBy: sortOrder : reverseSort" data-ng-include="cardTemplate"></div>' +
                             '</div>';
 
             this.scope = {
                 'model': '=source',
-                'filter': '='
+                'filter': '=',
+                'sortOrder': '=',
+                'reverseSort': '='
             };
 
             //
@@ -177,6 +179,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             var self = this,
                 watcher,
                 filterWatcher,
+                sortOrderWatcher,
                 mql;
 
             this.$$elem = element;
@@ -203,6 +206,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             filterWatcher = this.$$scope.$watchCollection('filter', this.$$onModelChange.bind(this));
  +          this.$$watchers.push(filterWatcher);
+
+            sortOrderWatcher = this.$$scope.$watchCollection('sortOrder', this.$$onModelChange.bind(this));
++           this.$$watchers.push(sortOrderWatcher);
 
             //
             // Register media query change events.
@@ -310,7 +316,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             this.$$scope.columns = [];
 
-            angular.forEach($filter('filter')(this.$$scope.model, this.$$scope.filter), function onIteration (card, index) {
+            angular.forEach($filter('orderBy')($filter('filter')(this.$$scope.model, this.$$scope.filter), this.$$scope.sortOrder, this.$$scope.reverseSort), function onIteration (card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
