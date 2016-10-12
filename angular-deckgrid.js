@@ -1,4 +1,4 @@
-/*! angular-deckgrid (v0.5.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
+/*! angular-deckgrid (v0.6.0) - Copyright: 2013 - 2016, André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com) - MIT */
 /*
  * angular-deckgrid
  *
