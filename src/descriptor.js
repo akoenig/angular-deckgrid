@@ -1,13 +1,13 @@
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
+ * Copyright(c) 2013-2016 André König <andre.koenig@posteo.de> / Mark Hamilton <mark@dryverless.com>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com)
  *
  */
 
@@ -16,7 +16,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
     'Deckgrid',
     '$templateCache',
 
-    function initialize (Deckgrid, $templateCache) {
+    function initialize(Deckgrid, $templateCache) {
 
         'use strict';
 
@@ -25,7 +25,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          * directive description object.
          *
          */
-        function Descriptor () {
+        function Descriptor() {
             this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
@@ -33,7 +33,9 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             '</div>';
 
             this.scope = {
-                'model': '=source'
+                'model': '=source',
+                'filter': '=',
+                'orderBy': '='
             };
 
             //
@@ -48,19 +50,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be incremented if using inline templates.
             //
             this.$$templateKeyIndex = 0;
-
         }
-
-        /**
-         * @private
-         *
-         * Cleanup method. Will be called when the
-         * deckgrid directive should be destroyed.
-         *
-         */
-        Descriptor.prototype.$$destroy = function $$destroy () {
-            this.$$deckgrid.destroy();
-        };
 
         /**
          * @private
@@ -68,15 +58,13 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          * The deckgrid link method. Will instantiate the deckgrid.
          *
          */
-        Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
+        Descriptor.prototype.$$link = function $$link(scope, elem, attrs, nullController, transclude) {
             var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex) + '.html';
-
-            scope.$on('$destroy', this.$$destroy.bind(this));
 
             if (angular.isUndefined(attrs.cardtemplate)) {
                 if (angular.isUndefined(attrs.cardtemplatestring)) {
                     // use the provided inner html as template
-                    transclude(scope, function onTransclude (innerHTML) {
+                    transclude(scope, function onTransclude(innerHTML) {
                         var extractedInnerHTML = [],
                             i = 0,
                             len = innerHTML.length,
@@ -109,10 +97,12 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             scope.mother = scope.$parent;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
+
+            scope.$on('$destroy', this.$$deckgrid.destroy.bind(this.$$deckgrid));
         };
 
         return {
-            create : function create () {
+            create: function create() {
                 return new Descriptor();
             }
         };

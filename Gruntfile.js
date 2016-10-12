@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
     'use strict';
 
-    var banner = '/*! <%= pkg.name %> (v<%= pkg.version %>) - Copyright: 2013 - 2014, <%= pkg.author %> - <%= pkg.license %> */\n';
+    var banner = '/*! <%= pkg.name %> (v<%= pkg.version %>) - Copyright: 2013 - 2016, <%= pkg.author %> - <%= pkg.license %> */\n';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('bower.json'),
