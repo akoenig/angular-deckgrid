@@ -144,9 +144,16 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
-### Version 0.6.0 (Future)
+### Version 0.7.0 (Future)
 
 - Open: [Bugfix] We need a solution to prevent the model binding for `innerHTML` templates (e.g. `ngIf` not working) [#44](https://github.com/akoenig/angular-deckgrid/issues/44)
+
+### Version 0.6.0 (20161011)
+
+- Add Filtering. [#88] (https://github.com/akoenig/angular-deckgrid/pull/88)
+- Add Order By. [#91] (https://github.com/akoenig/angular-deckgrid/issues/91)
+- Add Template Null check. [#94] (https://github.com/akoenig/angular-deckgrid/pull/94)
+- Fix destroy of appropriate deckgrid. [#108] (https://github.com/akoenig/angular-deckgrid/pull/108)
 
 ### Version 0.5.0 (20141031)
 
