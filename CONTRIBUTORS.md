@@ -14,3 +14,4 @@ _(ordered by first contribution)_
 - [Michel Boudreau](https://github.com/mboudreau)
 - [Sam Milledge](https://github.com/smilledge)
 - [Phuong Nguyen](https://github.com/phuongnd08)
+- [Mark Hamilton](https://github.com/thedarkcode)
