@@ -1,14 +1,14 @@
-/*! angular-deckgrid (v0.6.0) - Copyright: 2013 - 2016, André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com) - MIT */
+/*! angular-deckgrid (v0.5.0) - Copyright: 2013 - 2014, André König (andre.koenig@posteo.de) - MIT */
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
+ * Copyright(c) 2013-2016 André König <andre.koenig@posteo.de> / Mark Hamilton <mark@dryverless.com>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com)
  *
  */
 
@@ -28,13 +28,13 @@ angular.module('akoenig.deckgrid').directive('deckgrid', [
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
+ * Copyright(c) 2013-2016 André König <andre.koenig@posteo.de> / Mark Hamilton <mark@dryverless.com>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com)
  *
  */
 
@@ -135,17 +135,16 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
         };
     }
 ]);
-
 /*
  * angular-deckgrid
  *
- * Copyright(c) 2013-2014 André König <andre.koenig@posteo.de>
+ * Copyright(c) 2013-2016 André König <andre.koenig@posteo.de> / Mark Hamilton <mark@dryverless.com>
  * MIT Licensed
  *
  */
 
 /**
- * @author André König (andre.koenig@posteo.de)
+ * @author André König (andre.koenig@posteo.de) / Mark Hamilton (mark@dryverless.com)
  *
  */
 
@@ -303,7 +302,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             self.$$scope.columns = [];
 
-            angular.forEach($filter('orderBy')($filter('filter')(this.$$scope.model, this.$$scope.filter), this.$$scope.orderBy), function onIteration(card, index) {
+            angular.forEach($filter('orderBy')($filter('filter')(self.$$scope.model, self.$$scope.filter), self.$$scope.orderBy), function onIteration(card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
