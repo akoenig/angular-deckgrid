@@ -33,6 +33,8 @@ Okay, we assume that you have a collection of photos and you want to display the
 
 * `source`: The collection of objects that should be passed into your _deckgrid_ (by reference. Object change will be reflected in the grid).
 * `cardTemplate`: The URL to the template which represents one single card in the _deckgrid_.
+* `filter`: The filter to be applied to the source collection of objects.
+* `order-by`: The orderBy filter to be applied to the source collection of objects.
 
 ### Alternative ways to provide the template
 * `cardTemplateString` attribute: You can provide this attribute *instead* of the `cardTemplate` attribute to use the attribute value directly as the template. Example:
@@ -141,6 +143,7 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 - [theonegenerator.com](http://www.theonegenerator.com/): "This webapp is designed to any user in need of randomly generated data for testing cases, gaming and lottery spins."
 - [vazoo.de](https://vazoo.de/): "Vazoo - Der Beauty-Preisvergleich"
 - [vitaliator.com](https://vitaliator.com/): "Vitaliator - Das Fitnessnetzwerk"
+- [dryverlessads.com](https://dryverlessads.com/): "Dryverless Ads Offer Wall"
 
 ## Changelog
 
