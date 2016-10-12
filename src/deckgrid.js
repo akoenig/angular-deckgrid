@@ -165,7 +165,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             self.$$scope.columns = [];
 
-            angular.forEach($filter('orderBy')($filter('filter')(this.$$scope.model, this.$$scope.filter), this.$$scope.orderBy), function onIteration(card, index) {
+            angular.forEach($filter('orderBy')($filter('filter')(self.$$scope.model, self.$$scope.filter), self.$$scope.orderBy), function onIteration(card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
