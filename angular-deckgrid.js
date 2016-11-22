@@ -56,11 +56,14 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                                '<div data-ng-repeat="card in column" data-ng-include="cardTemplate"></div>' +
+                                '<div data-ng-repeat="card in column | orderBy: sortOrder : reverseSort" data-ng-include="cardTemplate"></div>' +
                             '</div>';
 
             this.scope = {
-                'model': '=source'
+                'model': '=source',
+                'filter': '=',
+                'sortOrder': '=',
+                'reverseSort': '='
             };
 
             //
@@ -75,7 +78,6 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be incremented if using inline templates.
             //
             this.$$templateKeyIndex = 0;
-
         }
 
         /**
@@ -163,8 +165,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
     '$window',
     '$log',
+    '$filter',
 
-    function initialize ($window, $log) {
+    function initialize ($window, $log, $filter) {
 
         'use strict';
 
@@ -175,6 +178,8 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         function Deckgrid (scope, element) {
             var self = this,
                 watcher,
+                filterWatcher,
+                sortOrderWatcher,
                 mql;
 
             this.$$elem = element;
@@ -199,6 +204,12 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             this.$$watchers.push(watcher);
 
+            filterWatcher = this.$$scope.$watchCollection('filter', this.$$onModelChange.bind(this));
+ +          this.$$watchers.push(filterWatcher);
+
+            sortOrderWatcher = this.$$scope.$watchCollection('sortOrder', this.$$onModelChange.bind(this));
++           this.$$watchers.push(sortOrderWatcher);
+
             //
             // Register media query change events.
             //
@@ -213,7 +224,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
                 self.$$watchers.push(onDestroy);
             });
-            
+
             mql = $window.matchMedia('(orientation: portrait)');
             mql.addListener(self.$$onMediaQueryChange.bind(self));
 
@@ -305,7 +316,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
             this.$$scope.columns = [];
 
-            angular.forEach(this.$$scope.model, function onIteration (card, index) {
+            angular.forEach($filter('orderBy')($filter('filter')(this.$$scope.model, this.$$scope.filter), this.$$scope.sortOrder, this.$$scope.reverseSort), function onIteration (card, index) {
                 var column = (index % self.$$scope.layout.columns) | 0;
 
                 if (!self.$$scope.columns[column]) {
