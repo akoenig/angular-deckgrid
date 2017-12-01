@@ -189,7 +189,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             // the pseudo "before element." There you have to save all
             // the column configurations.
             //
-            this.$$getLayout((layout) => {
+            this.$$getLayout(function (layout) {
 
                 this.$$scope.layout = layout;
 
@@ -338,7 +338,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          */
         Deckgrid.prototype.$$getLayout = function $$getLayout (callback) {
-            $timeout(() => {
+            $timeout(function () {
                 var content = $window.getComputedStyle(this.$$elem, ':before').content,
                     layout;
 
@@ -366,7 +366,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          */
         Deckgrid.prototype.$$onMediaQueryChange = function $$onMediaQueryChange () {
             var self = this;
-            this.$$getLayout((layout) => {
+            this.$$getLayout(function (layout) {
 
                 //
                 // Okay, the layout has changed.
