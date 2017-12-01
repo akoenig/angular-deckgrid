@@ -191,16 +191,16 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             //
             this.$$getLayout(function (layout) {
 
-                this.$$scope.layout = layout;
+                self.$$scope.layout = layout;
 
-                this.$$createColumns();
+                self.$$createColumns();
 
                 //
                 // Register model change.
                 //
-                watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
+                watcher = self.$$scope.$watchCollection('model', self.$$onModelChange.bind(self));
 
-                this.$$watchers.push(watcher);
+                self.$$watchers.push(watcher);
 
                 //
                 // Register media query change events.
