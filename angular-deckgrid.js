@@ -338,8 +338,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          */
         Deckgrid.prototype.$$getLayout = function $$getLayout (callback) {
+            var self = this;
             $timeout(function () {
-                var content = $window.getComputedStyle(this.$$elem, ':before').content,
+                var content = $window.getComputedStyle(self.$$elem, ':before').content,
                     layout;
 
                 if (content) {
