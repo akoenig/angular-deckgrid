@@ -163,8 +163,9 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
     '$window',
     '$log',
+    '$timeout',
 
-    function initialize ($window, $log) {
+    function initialize ($window, $log, $timeout) {
 
         'use strict';
 
@@ -188,35 +189,37 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             // the pseudo "before element." There you have to save all
             // the column configurations.
             //
-            this.$$scope.layout = this.$$getLayout();
+            this.$$getLayout(function (layout) {
 
-            this.$$createColumns();
+                self.$$scope.layout = layout;
 
-            //
-            // Register model change.
-            //
-            watcher = this.$$scope.$watchCollection('model', this.$$onModelChange.bind(this));
+                self.$$createColumns();
 
-            this.$$watchers.push(watcher);
+                //
+                // Register model change.
+                //
+                watcher = self.$$scope.$watchCollection('model', self.$$onModelChange.bind(self));
 
-            //
-            // Register media query change events.
-            //
-            angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
-                var handler = self.$$onMediaQueryChange.bind(self);
+                self.$$watchers.push(watcher);
 
-                function onDestroy () {
-                    rule.removeListener(handler);
-                }
+                //
+                // Register media query change events.
+                //
+                angular.forEach(self.$$getMediaQueries(), function onIteration (rule) {
+                    var handler = self.$$onMediaQueryChange.bind(self);
 
-                rule.addListener(handler);
+                    function onDestroy () {
+                        rule.removeListener(handler);
+                    }
 
-                self.$$watchers.push(onDestroy);
+                    rule.addListener(handler);
+
+                    self.$$watchers.push(onDestroy);
+                });
+                
+                mql = $window.matchMedia('(orientation: portrait)');
+                mql.addListener(self.$$onMediaQueryChange.bind(self));
             });
-            
-            mql = $window.matchMedia('(orientation: portrait)');
-            mql.addListener(self.$$onMediaQueryChange.bind(self));
-
         }
 
         /**
@@ -334,23 +337,26 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          * You are responsible for defining the respective styles within your CSS.
          *
          */
-        Deckgrid.prototype.$$getLayout = function $$getLayout () {
-            var content = $window.getComputedStyle(this.$$elem, ':before').content,
-                layout;
+        Deckgrid.prototype.$$getLayout = function $$getLayout (callback) {
+            var self = this;
+            $timeout(function () {
+                var content = $window.getComputedStyle(self.$$elem, ':before').content,
+                    layout;
 
-            if (content) {
-                content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
-                content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
-                content = content.split(' ');
+                if (content) {
+                    content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
+                    content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
+                    content = content.split(' ');
 
-                if (2 === content.length) {
-                    layout = {};
-                    layout.columns = (content[0] | 0);
-                    layout.classList = content[1].replace(/\./g, ' ').trim();
+                    if (2 === content.length) {
+                        layout = {};
+                        layout.columns = (content[0] | 0);
+                        layout.classList = content[1].replace(/\./g, ' ').trim();
+                    }
                 }
-            }
 
-            return layout;
+                callback(layout);
+            });
         };
 
         /**
@@ -360,20 +366,21 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          */
         Deckgrid.prototype.$$onMediaQueryChange = function $$onMediaQueryChange () {
-            var self = this,
-                layout = this.$$getLayout();
+            var self = this;
+            this.$$getLayout(function (layout) {
 
-            //
-            // Okay, the layout has changed.
-            // Creating a new column structure is not avoidable.
-            //
-            if (layout.columns !== this.$$scope.layout.columns) {
-                self.$$scope.layout = layout;
+                //
+                // Okay, the layout has changed.
+                // Creating a new column structure is not avoidable.
+                //
+                if (layout.columns !== self.$$scope.layout.columns) {
+                    self.$$scope.layout = layout;
 
-                self.$$scope.$apply(function onApply () {
-                    self.$$createColumns();
-                });
-            }
+                    self.$$scope.$apply(function onApply () {
+                        self.$$createColumns();
+                    });
+                }
+           });
         };
 
         /**
