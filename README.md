@@ -132,6 +132,11 @@ You may wonder why it is not possible to access your scope in the card template.
 
 A click on this button would execute the `doSomething()` function in your scope.
 
+When click card you can display the index of the card
+## UI
+![angular-img](clickcard.png)
+
+
 ## In action
 
 Do you use the `angular-deckgrid` and would like to be featured here? Just send me an [email](mailto:andre.koenig@posteo.de) and I will add you and your application to this list.
