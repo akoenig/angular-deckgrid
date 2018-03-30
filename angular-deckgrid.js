@@ -137,8 +137,9 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
             
-            //add index when click card start
-            var index = 0;
+            //add index when click card start 
+            
+            var index = 0;  //create index
             var medias = this.$$deckgrid.$$scope.model;
             scope.clickCard = function(card){
                 if(card.card.isselect == true && card.card.isadd ==true){
