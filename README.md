@@ -1,3 +1,8 @@
+> [!NOTE]
+> This project is preserved as a historical open-source project. It is not actively maintained, and its dependencies or recommended practices may be outdated.
+>
+> I’m keeping it public because it may still be useful as reference material. If you rely on it in production, please review the code carefully and consider maintaining your own fork.
+
 # angular-deckgrid
 
 A lightweight masonry-like grid for AngularJS.
