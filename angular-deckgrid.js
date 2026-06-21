@@ -248,7 +248,12 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
             }
 
             function hasDeckgridStyles (rule) {
-                var regexe   = /\[(\w*-)?deckgrid\]::?before/g,
+                //
+                // In MS Edge, the selector .deckgrid[deckgrid]::before comes out
+                // as [deckgrid].deckgrid::before, so to accommodate this, we allow
+                // matches on alphanumeric characters between [deckgrid] and ::before
+                //
+                var regexe   = /\[(\w*-)?deckgrid\]\w*::?before/g,
                     i        = 0,
                     selector = '';
 
