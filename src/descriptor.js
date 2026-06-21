@@ -90,7 +90,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             }
                         }
 
-                        $templateCache.put(templateKey, extractedInnerHTML.join());
+                        $templateCache.put(templateKey, extractedInnerHTML.join(""));
                     });
                 } else {
                     // use the provided template string
